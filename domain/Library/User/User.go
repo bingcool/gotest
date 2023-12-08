@@ -1,4 +1,4 @@
-package user
+package User
 
 import "fmt"
 
@@ -10,7 +10,7 @@ type User struct {
 }
 
 func (user *User) SetName(name string) {
-	user.Name = name
+	user.Name = myname
 }
 
 func (user *User) GetName() (name string) {
@@ -21,6 +21,7 @@ func (user *User) SetAddress(province string, city string, district string) {
 	user.Address.Province = province
 	user.Address.City = city
 	user.Address.District = district
+	user.Address.sex = 1
 }
 
 func (user *User) GetAddress() Address {
