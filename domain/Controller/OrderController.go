@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"goTest/domain/Go"
-	librryOrder "goTest/domain/Library/Order"
+	LibraryOrder "goTest/domain/Library/Order"
 	"log"
-	"strconv"
 )
 
 // OrderController 定义结构体
@@ -31,10 +30,14 @@ type ListOrderDto struct {
 }
 
 // ListOrder 订单列表
-func (order *OrderController) ListOrder(c *gin.Context) {
-	orderService := &librryOrder.OrderService{}
-	result := orderService.GetOrderList(1685959471)
+func (Order *OrderController) ListOrder(c *gin.Context) {
+	//userId := Order.UserId
+	//fmt.Println(userId)
+
+	orderService := &LibraryOrder.OrderService{}
+	result := orderService.GetOrderList(0)
 	var list []ListOrderDto
+	// list := make([]ListOrderDto, 0)
 	i := 0
 	for _, item := range result {
 		listOrderDto := ListOrderDto{}
@@ -65,12 +68,27 @@ func (order *OrderController) ListOrder(c *gin.Context) {
 		fmt.Println(err.Error())
 	}
 
-	order.returnJson(list)
+	//resDto := ListOrderDto{
+	//	OrderId:  12,
+	//	UserId:   23,
+	//	JsonData: "",
+	//	Address: map[string]any{
+	//		"country": "中国",
+	//		"city":    "深圳",
+	//	},
+	//}
+	//fmt.Println(resDto)
+
+	// resMap := map[string]any{}
+	Order.returnJson(list)
 }
 
 // SaveOrder 保存订单信息
-func (order *OrderController) SaveOrder(c *gin.Context) {
-	orderService := &librryOrder.OrderService{}
+func (Order *OrderController) SaveOrder(c *gin.Context) {
+	orderService := &LibraryOrder.OrderService{}
 	orderId := orderService.SaveOrder()
-	fmt.Println("订单ID-" + strconv.Itoa(orderId))
+
+	Order.returnJson(&map[string]int{
+		"order_id": orderId,
+	})
 }
