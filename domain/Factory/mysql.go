@@ -3,6 +3,7 @@ package Factory
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"runtime"
 	"sync"
 )
 
@@ -13,7 +14,18 @@ var (
 
 // GetDb 初始化数据库连接
 func GetDb() *gorm.DB {
-	dsn := "root:root@galaxy1024@tcp(localhost:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
+	osName := runtime.GOOS
+	switch osName {
+	case "darwin":
+		dsn := "root:123456@tcp(127.0.0.1:3307)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
+		return initDb(dsn)
+	default:
+		dsn := "root:root@galaxy1024@tcp(localhost:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
+		return initDb(dsn)
+	}
+}
+
+func initDb(dsn string) *gorm.DB {
 	var err error
 
 	dbOnce.Do(func() {
