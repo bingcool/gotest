@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"path/filepath"
-	"runtime"
 )
 
 func SetLoggerWithWriter(router *gin.Engine) {
@@ -14,7 +13,7 @@ func SetLoggerWithWriter(router *gin.Engine) {
 	//currentDir = filepath.ToSlash(currentDir)
 	logFilePath := filepath.Join(currentDir, "domain", "Storage", "gin.log")
 	// 如果你想将日志输出到文件中，可以将输出重定向到一个文件
-	logFile, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	logFile, err := os.Create(logFilePath)
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -29,27 +28,6 @@ func SetLoggerWithWriter(router *gin.Engine) {
 
 	// 设置请求时触发的中间件
 	router.Use(LoggerToFile(logFile))
-}
-
-func GetCurrentGoroutineID() uint64 {
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Println("Failed to get goroutine ID:", err)
-		}
-	}()
-
-	var buf [64]byte
-	n := runtime.Stack(buf[:], false)
-	idStr := string(buf[:n])
-
-	var id uint64
-	_, err := fmt.Sscanf(idStr, "goroutine %d", &id)
-	if err != nil {
-		fmt.Println("Failed to parse goroutine ID:", err)
-		return 0
-	}
-
-	return id
 }
 
 // LoggerToFile 自定义日志中间件

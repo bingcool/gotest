@@ -7,7 +7,9 @@ import (
 	"goTest/domain/Middlewares"
 	"goTest/domain/Router"
 	"log"
+	"os"
 	"runtime/pprof"
+	"strconv"
 )
 
 var threadProfile = pprof.Lookup("threadcreate")
@@ -24,6 +26,10 @@ func main() {
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func init() {
+	fmt.Println("Main package another init")
 }
 
 func startServer() {
@@ -47,6 +53,13 @@ func startServer() {
 
 	Router.SetupProductRouter(r)
 	Router.SetOrderRouter(r)
+
+	pid := os.Getpid()
+	serverFile, _ := os.Create("server.pid")
+	_, err := serverFile.WriteString(strconv.Itoa(pid))
+	if err != nil {
+		return
+	}
 
 	r.Run(":8080") // 监听并在 0.0.0.0:8080 上启动服务
 }
