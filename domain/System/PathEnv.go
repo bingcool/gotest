@@ -6,6 +6,7 @@ import (
 )
 
 const rootDirLinux = "/home/wwwroot/go/goTest"
+const rootDirMacos = "/Users/huangzengbing/Documents/wwwroot/goTest"
 const rootDirWindows = "D:\\wwwroot\\go\\goTest"
 
 func GetRootDir() string {
@@ -14,8 +15,11 @@ func GetRootDir() string {
 	var rootPath = ""
 	if IsWindows() {
 		rootPath = rootDirWindows
-	} else {
+	} else if IsLinux() {
 		items = strings.Split(rootDirLinux, separator)
+		rootPath = separator + filepath.Join(items...)
+	} else {
+		items = strings.Split(rootDirMacos, separator)
 		rootPath = separator + filepath.Join(items...)
 	}
 
@@ -35,4 +39,8 @@ func GetStorageGinLog() string {
 func GetServerPidFile() string {
 	pidFile := filepath.Join(GetRootDir(), "server.pid")
 	return pidFile
+}
+
+func MyTestAdd(a int, b int) int {
+	return a + b
 }

@@ -22,15 +22,31 @@ func IsProd() bool {
 func IsWindows() bool {
 	osName := runtime.GOOS
 	switch osName {
-	case "linux", "darwin":
-		return false
-	default:
+	case "windows":
 		return true
+	default:
+		return false
 	}
 }
 
 func IsLinux() bool {
-	return !IsWindows()
+	osName := runtime.GOOS
+	switch osName {
+	case "linux":
+		return true
+	default:
+		return false
+	}
+}
+
+func IsMacos() bool {
+	osName := runtime.GOOS
+	switch osName {
+	case "darwin":
+		return true
+	default:
+		return false
+	}
 }
 
 // SaveMainPid 保存服务启动进程ID
