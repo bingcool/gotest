@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-type ControllerConstruct interface {
+type ControllerInterface interface {
 	Construct(c *gin.Context) *BaseController
 }
 
@@ -16,6 +16,7 @@ type BaseController struct {
 	context *gin.Context
 }
 
+// Construct 实现ControllerInterface的Construct方法
 func (b *BaseController) Construct(c *gin.Context) *BaseController {
 	b.UserId, _ = strconv.Atoi(c.DefaultQuery("user_id", "0"))
 	b.context = c

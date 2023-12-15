@@ -3,16 +3,14 @@ package Middlewares
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"goTest/domain/System"
 	"io"
 	"os"
-	"path/filepath"
 )
 
 func SetLoggerWithWriter(router *gin.Engine) {
-	currentDir, _ := os.Getwd()
-	//currentDir = filepath.ToSlash(currentDir)
-	logFilePath := filepath.Join(currentDir, "domain", "Storage", "gin.log")
 	// 如果你想将日志输出到文件中，可以将输出重定向到一个文件
+	logFilePath := System.GetStorageGinLog()
 	logFile, err := os.Create(logFilePath)
 	if err != nil {
 		fmt.Println(err.Error())

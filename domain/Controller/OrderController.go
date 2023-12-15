@@ -68,6 +68,14 @@ func (Order *OrderController) ListOrder(c *gin.Context) {
 		fmt.Println(err.Error())
 	}
 
+	// 读取flags参数
+	//myname, _ := Console.GetCmd().Flags().GetString("myname")
+	//fmt.Println("myname=", myname)
+	//
+	//// 读取flags参数
+	//environment, _ := Console.GetCmd().Flags().GetString("environment")
+	//fmt.Println("my-environment=", environment)
+
 	//resDto := ListOrderDto{
 	//	OrderId:  12,
 	//	UserId:   23,
@@ -78,7 +86,6 @@ func (Order *OrderController) ListOrder(c *gin.Context) {
 	//	},
 	//}
 	//fmt.Println(resDto)
-
 	// resMap := map[string]any{}
 	Order.returnJson(list)
 }

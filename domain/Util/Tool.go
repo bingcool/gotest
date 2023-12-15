@@ -17,3 +17,12 @@ func IsSlice(data interface{}) bool {
 func IsChan(data interface{}) bool {
 	return reflect.TypeOf(data).Kind() == reflect.Chan
 }
+
+func ContainsInSlice(slice []string, targetItem string) bool {
+	for _, item := range slice {
+		if item == targetItem {
+			return true
+		}
+	}
+	return false
+}
