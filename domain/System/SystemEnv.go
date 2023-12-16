@@ -39,6 +39,10 @@ func IsLinux() bool {
 	}
 }
 
+// IsMacos
+//
+//	@Description:
+//	@return bool
 func IsMacos() bool {
 	osName := runtime.GOOS
 	switch osName {
