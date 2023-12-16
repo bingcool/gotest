@@ -23,6 +23,7 @@ func init() {
 	rootCmd.AddCommand(StartCmd)
 	rootCmd.AddCommand(StopCmd)
 	rootCmd.AddCommand(VersionCmd)
+	rootCmd.AddCommand(ScriptCmd)
 
 	StartCmd.Flags().StringVar(&Env, "environment", "dev", "environment of system")
 }

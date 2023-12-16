@@ -9,6 +9,10 @@ import (
 type OrderService struct {
 }
 
+func NewOrderService() *OrderService {
+	return &OrderService{}
+}
+
 // GetOrderList 获取订单列表
 func (OrderService *OrderService) GetOrderList(orderId int) []Model.Order {
 

@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-type ControllerInterface interface {
+type Interface interface {
 	Construct(c *gin.Context) *BaseController
 }
 

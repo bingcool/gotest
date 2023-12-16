@@ -1,6 +1,9 @@
 package Util
 
-import "reflect"
+import (
+	"reflect"
+	"strconv"
+)
 
 func IsMap(data interface{}) bool {
 	return reflect.TypeOf(data).Kind() == reflect.Map
@@ -25,4 +28,19 @@ func ContainsInSlice(slice []string, targetItem string) bool {
 		}
 	}
 	return false
+}
+
+func IsInt(value string) bool {
+	_, err := strconv.Atoi(value)
+	return err == nil
+}
+
+func IsFloat(value string) bool {
+	_, err := strconv.ParseFloat(value, 64)
+	return err == nil
+}
+
+func IsNumber(value string) bool {
+	_, err := strconv.ParseFloat(value, 64)
+	return err == nil
 }
