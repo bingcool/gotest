@@ -36,7 +36,7 @@ func init() {
 func parseFlags() {
 	args := os.Args
 	charsToRemove := "-"
-	if len(args) >= 2 && args[1] == scriptCommand {
+	if len(args) >= 3 && args[1] == scriptCommand {
 		for _, v := range args[3:] {
 			item := strings.Split(v, "=")
 			var flagNameString string
