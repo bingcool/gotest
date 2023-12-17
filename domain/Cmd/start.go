@@ -15,8 +15,10 @@ import (
 	"runtime"
 )
 
+var startCommand = "start"
+
 var StartCmd = &cobra.Command{
-	Use:   "start",
+	Use:   startCommand,
 	Short: "start the gofy",
 	Long:  `start the gofy`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
@@ -54,15 +56,16 @@ func run(cmd *cobra.Command, args []string) {
 		// linux，macos
 		case "linux", "darwin":
 			newArgs := make([]string, 0)
+			newArgs = append(newArgs, startCommand)
 			for _, value := range args {
 				if value != "d" && value != "D" {
 					newArgs = append(newArgs, value)
 				}
 			}
-			cmd1 := exec.Command(os.Args[0], newArgs...)
-			cmd1.Stdin = os.Stdin
+			newCmd := exec.Command(os.Args[0], newArgs...)
+			newCmd.Stdin = os.Stdin
 			//cmd1.Stderr = os.Stderr
-			err := cmd1.Start()
+			err := newCmd.Start()
 			if err != nil {
 				_, err := fmt.Fprintf(os.Stderr, "[-] Error: %s\n", err)
 				if err != nil {

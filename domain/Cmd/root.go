@@ -3,6 +3,10 @@ package Cmd
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"goTest/domain/Util"
+	"os"
+	"strconv"
+	"strings"
 )
 
 var rootCmd = &cobra.Command{
@@ -24,6 +28,7 @@ func init() {
 	rootCmd.AddCommand(StopCmd)
 	rootCmd.AddCommand(VersionCmd)
 	rootCmd.AddCommand(ScriptCmd)
+	rootCmd.AddCommand(DaemonCmd)
 
 	StartCmd.Flags().StringVar(&Env, "environment", "dev", "environment of system")
 }
@@ -31,4 +36,34 @@ func init() {
 // Execute executes the root command.
 func Execute() error {
 	return rootCmd.Execute()
+}
+
+// ParseFlags
+func ParseFlags(useCmd string, runCmd *cobra.Command) {
+	args := os.Args
+	if len(args) >= 3 && args[1] == useCmd {
+		charsToRemove := "-"
+		for _, v := range args[3:] {
+			item := strings.Split(v, "=")
+			if len(item) != 2 {
+				continue
+			}
+			var flagNameString string
+			var flagNameInt int
+			var flagNameFloat float64
+			flagName := strings.ReplaceAll(item[0], charsToRemove, "")
+			flagValue := item[1]
+			if Util.IsNumber(flagValue) {
+				if Util.IsInt(flagValue) {
+					flagValueNumber, _ := strconv.Atoi(flagValue)
+					runCmd.Flags().IntVar(&flagNameInt, flagName, flagValueNumber, "int flags params")
+				} else if Util.IsFloat(flagValue) {
+					flagValueFloat, _ := strconv.ParseFloat(flagValue, 64)
+					runCmd.Flags().Float64Var(&flagNameFloat, flagName, flagValueFloat, "float flags params")
+				}
+			} else {
+				runCmd.Flags().StringVar(&flagNameString, flagName, flagValue, "string flags params")
+			}
+		}
+	}
 }

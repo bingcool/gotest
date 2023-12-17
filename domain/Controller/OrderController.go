@@ -22,6 +22,13 @@ func NewOrder(c *gin.Context) *OrderController {
 	return order
 }
 
+// ListOrderReqDto 请求结构体
+type ListOrderReqDto struct {
+	OrderId  int `json:"order_id" form:"order_id"`
+	OrderId1 int `json:"order_id1" form:"order_id1"`
+}
+
+// ListOrderDto 响应结构体
 type ListOrderDto struct {
 	OrderId  int            `json:"order_id"`
 	UserId   int            `json:"user_id"`
@@ -31,8 +38,12 @@ type ListOrderDto struct {
 
 // ListOrder 订单列表
 func (Order *OrderController) ListOrder(c *gin.Context) {
+	listOrderReqDto := ListOrderReqDto{}
+	Order.bindToReqDtoStruct(&listOrderReqDto)
+
 	//userId := Order.UserId
-	//fmt.Println(userId)
+	fmt.Println("POST", listOrderReqDto.OrderId)
+	fmt.Println("GET", listOrderReqDto.OrderId1)
 
 	orderService := &LibraryOrder.OrderService{}
 	result := orderService.GetOrderList(0)

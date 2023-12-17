@@ -15,7 +15,7 @@ func SetOrderRouter(router *gin.Engine) {
 			})
 		})
 
-		v1.GET("/order/list", func(context *gin.Context) {
+		v1.Any("/order/list", func(context *gin.Context) {
 			(Controller.NewOrder(context)).ListOrder(context)
 		})
 

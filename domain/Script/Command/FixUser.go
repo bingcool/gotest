@@ -9,7 +9,7 @@ import (
 func Test1(cmd *cobra.Command) {
 	fmt.Println("script test1......")
 
-	name, _ := cmd.Flags().GetString("myname1")
+	name, _ := cmd.Flags().GetString("myname")
 	age, _ := cmd.Flags().GetInt("myage")
 	kk, _ := cmd.Flags().GetString("kk")
 	price, _ := cmd.Flags().GetFloat64("price")

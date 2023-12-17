@@ -11,6 +11,14 @@ type Interface interface {
 	Construct(c *gin.Context) *BaseController
 }
 
+func (b *BaseController) bindToReqDtoStruct(obj any) {
+	if reflect.ValueOf(obj).Kind().String() != "ptr" {
+		panic("bindToReqDtoStruct error")
+	}
+
+	_ = b.context.ShouldBind(obj)
+}
+
 type BaseController struct {
 	UserId  int
 	context *gin.Context
