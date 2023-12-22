@@ -1,4 +1,4 @@
-package Daemon
+package Cron
 
 import (
 	"github.com/spf13/cobra"
@@ -8,12 +8,17 @@ import (
 type ScheduleFunc func(cmd *cobra.Command) []string
 type ScheduleType map[string]map[string]ScheduleFunc
 
-var daemonSchedule ScheduleType
+var cronSchedule ScheduleType
 
-func RegisterDaemonSchedule() *ScheduleType {
-	daemonSchedule = ScheduleType{
+func RegisterCronSchedule() *ScheduleType {
+	cronSchedule = ScheduleType{
 		// 用户数据
-		"consume-user-order": map[string]ScheduleFunc{
+		"cron-user-order": map[string]ScheduleFunc{
+			"spec": func(cmd *cobra.Command) []string {
+				spec := make([]string, 0)
+				spec = append(spec, "0 0 0 0 0")
+				return spec
+			},
 			"flags": func(cmd *cobra.Command) []string {
 				flags := make([]string, 0)
 				flags = append(flags, "--name=huang")
@@ -33,5 +38,5 @@ func RegisterDaemonSchedule() *ScheduleType {
 		//	},
 		//},
 	}
-	return &daemonSchedule
+	return &cronSchedule
 }

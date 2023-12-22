@@ -7,7 +7,7 @@ import (
 
 var scriptSchedule map[string]func(cmd *cobra.Command)
 
-func GetScriptSchedule() *map[string]func(cmd *cobra.Command) {
+func RegisterScriptSchedule() *map[string]func(cmd *cobra.Command) {
 	scriptSchedule = map[string]func(cmd *cobra.Command){
 		// 修复用户数据
 		"fix-user": func(cmd *cobra.Command) {

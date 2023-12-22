@@ -19,12 +19,12 @@ var ScriptCmd = &cobra.Command{
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		Console.NewConsole().PutCommand(cmd)
-		schedule := *Script.GetScriptSchedule()
+		schedule := *Script.RegisterScriptSchedule()
 		callFunc := schedule[args[0]]
 		callFunc(cmd)
 	},
 }
 
 func init() {
-	ParseFlags(scriptCommand, ScriptCmd)
+	initParseFlag(scriptCommand, ScriptCmd)
 }
