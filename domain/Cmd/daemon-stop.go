@@ -6,7 +6,6 @@ import (
 	"goTest/domain/Console"
 	"log"
 	"os"
-	"path/filepath"
 	"syscall"
 )
 
@@ -31,9 +30,9 @@ func init() {
 }
 
 func stopDaemon(args []string) {
-	commandName := args[0]
-	pidFile := filepath.Join(getDaemonPidPath(), commandName+".pid")
-	pid := getDaemonProcessPid(pidFile)
+	processName := args[0]
+	pidFile := getDaemonPidFile(processName)
+	pid := getProcessPid(pidFile)
 	killProcess(pid, pidFile)
 }
 

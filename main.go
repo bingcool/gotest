@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"goTest/domain/Cmd"
 	"goTest/domain/System"
-	"log"
 	"runtime"
 	"time"
 )
@@ -12,13 +10,13 @@ import (
 //var threadProfile = pprof.Lookup("threadcreate")
 
 func main() {
-	//test()
+	test()
 
-	System.GetRootDir()
-	err := Cmd.Execute()
-	if err != nil {
-		log.Fatal("启动错误")
-	}
+	//System.GetRootDir()
+	//err := Cmd.Execute()
+	//if err != nil {
+	//	log.Fatal("启动错误")
+	//}
 }
 
 func init() {
@@ -32,6 +30,10 @@ func test() {
 	// 设置线程数量为 4
 	runtime.GOMAXPROCS(1)
 
+	// 信号监听
+	System.EventLoopSigtermSignal()
+
+	fmt.Println("start start ")
 	//debug.SetMaxThreads(10)
 
 	isErrDoneChan := make(chan int, 1)

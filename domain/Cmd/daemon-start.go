@@ -6,7 +6,6 @@ import (
 	"github.com/spf13/cobra"
 	"goTest/domain/Console"
 	"goTest/domain/Daemon"
-	"goTest/domain/Util"
 	"log"
 	"os"
 	"os/exec"
@@ -36,16 +35,16 @@ func init() {
 
 func initDaemonStartFlags(cmd *cobra.Command) {
 	if os.Args[1] == daemonStartCommandName {
-		commandName := os.Args[2]
+		processName := os.Args[2]
 		scheduleList := *Daemon.RegisterDaemonSchedule()
-		processItemMap, isExist := scheduleList[commandName]
+		processItemMap, isExist := scheduleList[processName]
 		if !isExist {
-			panic("找不到对应的进程名=" + commandName)
+			panic("找不到对应的进程名=" + processName)
 		}
 
 		flagsFn, isExistFlagFn := processItemMap["flags"]
 		if !isExistFlagFn {
-			panic(commandName + "找不到对应的flags")
+			panic(processName + "找不到对应的flags")
 		}
 		flags := flagsFn(cmd)
 		log.Println(flags)
@@ -54,29 +53,29 @@ func initDaemonStartFlags(cmd *cobra.Command) {
 }
 
 func startDaemon(cmd *cobra.Command, args []string) {
-	commandName := args[0]
+	processName := args[0]
 	scheduleList := *Daemon.RegisterDaemonSchedule()
-	processItemMap, isExist := scheduleList[commandName]
+	processItemMap, isExist := scheduleList[processName]
 	if !isExist {
-		panic("找不到对应的进程名=" + commandName)
+		panic("找不到对应的进程名=" + processName)
 	}
 
 	fn, isExistFn := processItemMap["fn"]
 	if !isExistFn {
-		panic(commandName + "找不到对应的处理函数")
+		panic(processName + "找不到对应的处理函数")
 	}
 
-	if Util.ContainsInSlice(args, "d") || Util.ContainsInSlice(args, "D") {
+	if isFork(args) {
 		forkDaemonProcess(args)
 		os.Exit(0)
 	} else {
-		startProcess(commandName, fn, cmd)
+		startProcess(processName, fn, cmd)
 	}
 }
 
-func startProcess(commandName string, fn func(cmd *cobra.Command) []string, cmd *cobra.Command) {
+func startProcess(processName string, fn func(cmd *cobra.Command) []string, cmd *cobra.Command) {
 	// 判断进程是否已经启动了
-	//pid := getDaemonProcessPid(getPidFilePath(commandName))
+	//pid := getProcessPid(getDaemonPidFile(processName))
 	//if pid > 0 {
 	//	if isProcessRunning(pid) {
 	//		log.Printf("进程ID=%d已经启动，无需重新启动", pid)
@@ -84,7 +83,7 @@ func startProcess(commandName string, fn func(cmd *cobra.Command) []string, cmd 
 	//	}
 	//}
 	createDaemonPidPath()
-	saveDaemonProcessPid(commandName)
+	saveProcessPid(getDaemonPidFile(processName))
 
 	channel := make(chan int, 1)
 	go func(channel chan int) {
@@ -93,7 +92,7 @@ func startProcess(commandName string, fn func(cmd *cobra.Command) []string, cmd 
 
 	c := cron.New()
 	_, _ = c.AddFunc("@every 2s", func() {
-		saveDaemonProcessPid(commandName)
+		saveProcessPid(getDaemonPidFile(processName))
 	})
 	c.Start()
 
@@ -118,7 +117,6 @@ func forkDaemonProcess(args []string) {
 		newCmd.Stdin = os.Stdin
 		//newCmd.Stdout = os.Stdout
 		newCmd.Stderr = os.Stderr
-		newCmd.Wait()
 		err := newCmd.Start()
 		if err != nil {
 			_, _ = fmt.Fprintf(os.Stderr, "创建exec守护进程失败: %s\n", err)

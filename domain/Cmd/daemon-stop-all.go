@@ -38,7 +38,7 @@ func stopDaemonAll(isExit bool) {
 
 	for _, file := range files {
 		pidFile := filepath.Join(pidFilePath, file.Name())
-		pid := getDaemonProcessPid(pidFile)
+		pid := getProcessPid(pidFile)
 		killProcess(pid, pidFile)
 	}
 

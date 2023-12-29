@@ -46,6 +46,11 @@ func GetDaemonPath() string {
 	return daemonPath
 }
 
+func GetCronPath() string {
+	daemonPath := filepath.Join(GetRootDir(), "domain", "Daemon")
+	return daemonPath
+}
+
 func MyTestAdd(a int, b int) int {
 	return a + b
 }
