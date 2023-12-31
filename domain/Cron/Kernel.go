@@ -2,21 +2,19 @@ package Cron
 
 import (
 	"github.com/spf13/cobra"
-	"goTest/domain/Daemon/Worker"
+	"goTest/domain/Console"
+	"goTest/domain/Cron/Order"
 )
 
-type ScheduleFunc func(cmd *cobra.Command) []string
-type ScheduleType map[string]map[string]ScheduleFunc
+var cronSchedule Console.ScheduleType
 
-var cronSchedule ScheduleType
-
-func RegisterCronSchedule() *ScheduleType {
-	cronSchedule = ScheduleType{
+func RegisterCronSchedule() *Console.ScheduleType {
+	cronSchedule = Console.ScheduleType{
 		// 用户数据
-		"cron-user-order": map[string]ScheduleFunc{
+		"cron-user-order": map[string]Console.ScheduleFunc{
 			"spec": func(cmd *cobra.Command) []string {
 				spec := make([]string, 0)
-				spec = append(spec, "0 0 0 0 0")
+				spec = append(spec, "@every 10s")
 				return spec
 			},
 			"flags": func(cmd *cobra.Command) []string {
@@ -25,7 +23,7 @@ func RegisterCronSchedule() *ScheduleType {
 				return flags
 			},
 			"fn": func(cmd *cobra.Command) []string {
-				Worker.Run(cmd)
+				Order.Run(cmd)
 				return make([]string, 0)
 			},
 		},
@@ -34,7 +32,7 @@ func RegisterCronSchedule() *ScheduleType {
 		//"consume-user-order1": map[string]any{
 		//	"params": "kkkkk",
 		//	"fn": func(cmd *cobra.Command) {
-		//		Worker.Run1(cmd)
+		//		Order.Run1(cmd)
 		//	},
 		//},
 	}

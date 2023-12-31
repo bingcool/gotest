@@ -1,6 +1,7 @@
 package Cmd
 
 import (
+	"flag"
 	"goTest/domain/System"
 	"goTest/domain/Util"
 	"log"
@@ -9,6 +10,8 @@ import (
 	"strconv"
 	"syscall"
 )
+
+var cronServerPidFile = "cron-server.pid"
 
 func saveProcessPid(pidFile string) {
 	pid := os.Getpid()
@@ -49,6 +52,26 @@ func getCronPidPath() string {
 	return folderPath
 }
 
+func saveCronServerPid(pid int) {
+	cronServerPidFile := filepath.Join(getCronPidPath(), cronServerPidFile)
+	serverFile, _ := os.Create(cronServerPidFile)
+	_, err := serverFile.WriteString(strconv.Itoa(pid))
+	if err != nil {
+		log.Fatal("save cron-server.pid error")
+	}
+}
+
+func getCronServerPid() int {
+	cronServerPidFile := filepath.Join(getCronPidPath(), cronServerPidFile)
+	pid, err := os.ReadFile(cronServerPidFile)
+	if err != nil {
+		log.Fatal("读取不到cron-server.pid")
+	}
+	var serverPid int
+	serverPid, _ = strconv.Atoi(string(pid))
+	return serverPid
+}
+
 func createPidPath(pidPath string) {
 	dirPath := filepath.Join(pidPath, "pid")
 	// 使用 Stat 函数获取文件夹信息
@@ -83,10 +106,19 @@ func isProcessRunning(pid int) bool {
 	}
 	err = process.Signal(syscall.Signal(0))
 	if err != nil {
-		log.Printf("Process Id=%d is dead!", pid)
 		return false
 	} else {
-		log.Printf("Process Id=%d is alive!", pid)
 		return true
 	}
+}
+
+func isFromCron() bool {
+	flag.Parse()
+	list := flag.Args()
+	for _, item := range list {
+		if item == "--from-flag=cron" || item == "-from-flag=cron" {
+			return true
+		}
+	}
+	return false
 }

@@ -1,6 +1,7 @@
 package Cmd
 
 import (
+	"flag"
 	"github.com/spf13/cobra"
 	"goTest/domain/Console"
 	"goTest/domain/Daemon"
@@ -8,6 +9,8 @@ import (
 	"os"
 	"time"
 )
+
+// go run main.go daemon-start-all
 
 var daemonStartAllCommandName = "daemon-start-all"
 
@@ -26,17 +29,25 @@ var DaemonStartAllCmd = &cobra.Command{
 }
 
 func init() {
-	initParseFlag(daemonStartAllCommandName, DaemonStartAllCmd)
+	initDaemonStartAllFlags()
+}
+
+func initDaemonStartAllFlags() {
+	if os.Args[1] == daemonStartAllCommandName {
+		if len(os.Args) > 2 {
+			parseFlag(DaemonStartAllCmd, flag.Args()[2:])
+		}
+	}
 }
 
 func startDamonAll() {
 	scheduleList := *Daemon.RegisterDaemonSchedule()
-	for commandName := range scheduleList {
-		log.Println(commandName)
+	for processName := range scheduleList {
+		log.Println(processName)
 		newArgs := make([]string, 0)
-		newArgs = append(newArgs, commandName)
+		newArgs = append(newArgs, processName)
 		forkDaemonProcess(newArgs)
-		log.Printf("启动进程【%s】", commandName)
+		log.Printf("启动进程【%s】", processName)
 		time.Sleep(100 * time.Microsecond)
 	}
 	os.Exit(0)

@@ -1,12 +1,15 @@
 package Cmd
 
 import (
+	"flag"
 	"github.com/spf13/cobra"
 	"goTest/domain/Console"
 	"log"
 	"os"
 	"path/filepath"
 )
+
+// go run main.go daemon-stop-all
 
 var daemonStopAllCommandName = "daemon-stop-all"
 
@@ -25,7 +28,15 @@ var DaemonStopAllCmd = &cobra.Command{
 }
 
 func init() {
-	initParseFlag(daemonStopAllCommandName, DaemonStopAllCmd)
+	initDaemonStopAllFlag()
+}
+
+func initDaemonStopAllFlag() {
+	if os.Args[1] == daemonStopAllCommandName {
+		if len(os.Args) > 2 {
+			parseFlag(DaemonStopAllCmd, flag.Args()[2:])
+		}
+	}
 }
 
 func stopDaemonAll(isExit bool) {

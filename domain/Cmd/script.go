@@ -5,12 +5,15 @@ import (
 	"github.com/spf13/cobra"
 	"goTest/domain/Console"
 	"goTest/domain/Script"
+	"os"
 )
 
-var scriptCommand = "script"
+// go run main.go script fix-user --order_id=11111
+
+var scriptCommandName = "script"
 
 var ScriptCmd = &cobra.Command{
-	Use:   scriptCommand,
+	Use:   scriptCommandName,
 	Short: "run script",
 	Long:  "run script",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
@@ -26,5 +29,13 @@ var ScriptCmd = &cobra.Command{
 }
 
 func init() {
-	initParseFlag(scriptCommand, ScriptCmd)
+	initScriptParseFlag()
+}
+
+func initScriptParseFlag() {
+	if os.Args[1] == scriptCommandName {
+		if len(os.Args) > 3 {
+			parseFlag(ScriptCmd, os.Args[3:])
+		}
+	}
 }

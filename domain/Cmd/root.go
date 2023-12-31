@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"goTest/domain/Util"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -33,6 +32,7 @@ func init() {
 	rootCmd.AddCommand(DaemonStopCmd)
 	rootCmd.AddCommand(DaemonStopAllCmd)
 	rootCmd.AddCommand(CronStartCmd)
+	rootCmd.AddCommand(CronStopCmd)
 
 	StartCmd.Flags().StringVar(&Env, "environment", "dev", "environment of system")
 }
@@ -40,15 +40,6 @@ func init() {
 // Execute executes the root command.
 func Execute() error {
 	return rootCmd.Execute()
-}
-
-// ParseFlags
-func initParseFlag(useCmd string, runCmd *cobra.Command) {
-	args := os.Args
-	if len(args) >= 3 && args[1] == useCmd {
-		flags := args[3:]
-		parseFlag(runCmd, flags)
-	}
 }
 
 func parseFlag(runCmd *cobra.Command, flags []string) {
@@ -61,7 +52,7 @@ func parseFlag(runCmd *cobra.Command, flags []string) {
 		var flagNameString string
 		var flagNameInt int
 		var flagNameFloat float64
-		flagName := strings.ReplaceAll(item[0], charsToRemove, "")
+		flagName := strings.Replace(item[0], charsToRemove, "", 2)
 		flagValue := item[1]
 		if Util.IsNumber(flagValue) {
 			if Util.IsInt(flagValue) {

@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"goTest/domain/Cmd"
 	"goTest/domain/System"
+	"log"
 	"runtime"
 	"time"
 )
@@ -10,13 +12,13 @@ import (
 //var threadProfile = pprof.Lookup("threadcreate")
 
 func main() {
-	test()
+	//test()
 
-	//System.GetRootDir()
-	//err := Cmd.Execute()
-	//if err != nil {
-	//	log.Fatal("启动错误")
-	//}
+	System.GetRootDir()
+	err := Cmd.Execute()
+	if err != nil {
+		log.Fatal("启动错误")
+	}
 }
 
 func init() {

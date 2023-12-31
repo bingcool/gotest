@@ -3,6 +3,7 @@ package Cmd
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/robfig/cron/v3"
 	"github.com/spf13/cobra"
 	"goTest/domain/Console"
 	"goTest/domain/Middlewares"
@@ -15,10 +16,12 @@ import (
 	"runtime"
 )
 
-var startCommand = "start"
+// go run main.go start --myname=bingcool
+
+var startCommandName = "start"
 
 var StartCmd = &cobra.Command{
-	Use:   startCommand,
+	Use:   startCommandName,
 	Short: "start the gofy",
 	Long:  `start the gofy`,
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
@@ -36,16 +39,16 @@ var StartCmd = &cobra.Command{
 	},
 }
 
-// MyName 定义flags
-var (
-	MyName string
-	Show   int
-)
-
 func init() {
-	// 在 Execute() 方法之前添加标志参数
-	StartCmd.Flags().StringVar(&MyName, "myname", "", "Description of flagname")
-	StartCmd.Flags().IntVar(&Show, "show", 0, "Description of flagname")
+	initStartParseFlag()
+}
+
+func initStartParseFlag() {
+	if os.Args[1] == startCommandName {
+		if len(os.Args) > 2 {
+			parseFlag(StartCmd, os.Args[2:])
+		}
+	}
 }
 
 func run(cmd *cobra.Command, args []string) {
@@ -56,7 +59,7 @@ func run(cmd *cobra.Command, args []string) {
 		// linux，macos
 		case "linux", "darwin":
 			newArgs := make([]string, 0)
-			newArgs = append(newArgs, startCommand)
+			newArgs = append(newArgs, startCommandName)
 			for _, value := range args {
 				if value != "d" && value != "D" {
 					newArgs = append(newArgs, value)
@@ -90,6 +93,11 @@ func startServer() {
 	Router.SetupProductRouter(r)
 	Router.SetOrderRouter(r)
 	System.SaveMainPid()
+	crontab := cron.New()
+	_, _ = crontab.AddFunc("@every 10s", func() {
+		System.SaveMainPid()
+	})
+
 	err := r.Run(":8080")
 	// 监听并在 0.0.0.0:8080 上启动服务
 	if err != nil {

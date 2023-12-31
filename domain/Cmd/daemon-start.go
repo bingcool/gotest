@@ -5,12 +5,14 @@ import (
 	"github.com/robfig/cron/v3"
 	"github.com/spf13/cobra"
 	"goTest/domain/Console"
+	"goTest/domain/Cron"
 	"goTest/domain/Daemon"
-	"log"
 	"os"
 	"os/exec"
 	"runtime"
 )
+
+// go run main.go daemon-start consume-user-order --name=bingcool
 
 var daemonStartCommandName = "daemon-start"
 
@@ -19,8 +21,9 @@ var DaemonStartCmd = &cobra.Command{
 	Short: "run script",
 	Long:  "run script",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		// 在每个命令执行之前执行的操作
-		// log.Printf("daemon before run ")
+		if len(args) == 0 {
+			panic("请指定启动进程名")
+		}
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		Console.NewConsole().PutCommand(cmd)
@@ -29,32 +32,45 @@ var DaemonStartCmd = &cobra.Command{
 }
 
 func init() {
-	initDaemonStartFlags(DaemonStartCmd)
-	initParseFlag(daemonStartCommandName, DaemonStartCmd)
+	initDaemonStartFlags()
 }
 
-func initDaemonStartFlags(cmd *cobra.Command) {
+func initDaemonStartFlags() {
 	if os.Args[1] == daemonStartCommandName {
 		processName := os.Args[2]
-		scheduleList := *Daemon.RegisterDaemonSchedule()
+		scheduleList := getSchedule()
 		processItemMap, isExist := scheduleList[processName]
 		if !isExist {
 			panic("找不到对应的进程名=" + processName)
 		}
-
 		flagsFn, isExistFlagFn := processItemMap["flags"]
 		if !isExistFlagFn {
 			panic(processName + "找不到对应的flags")
 		}
-		flags := flagsFn(cmd)
-		log.Println(flags)
-		parseFlag(cmd, flags)
+
+		flags := flagsFn(DaemonStartCmd)
+		parseFlag(DaemonStartCmd, flags)
+		if len(os.Args) > 2 {
+			fmt.Println(os.Args)
+			parseFlag(DaemonStartCmd, os.Args[2:])
+		}
 	}
+}
+
+func getSchedule() Console.ScheduleType {
+	var scheduleList Console.ScheduleType
+	if isFromCron() {
+		scheduleList = *Cron.RegisterCronSchedule()
+	} else {
+		scheduleList = *Daemon.RegisterDaemonSchedule()
+	}
+
+	return scheduleList
 }
 
 func startDaemon(cmd *cobra.Command, args []string) {
 	processName := args[0]
-	scheduleList := *Daemon.RegisterDaemonSchedule()
+	scheduleList := getSchedule()
 	processItemMap, isExist := scheduleList[processName]
 	if !isExist {
 		panic("找不到对应的进程名=" + processName)
@@ -82,20 +98,26 @@ func startProcess(processName string, fn func(cmd *cobra.Command) []string, cmd 
 	//		return
 	//	}
 	//}
+
+	if isFromCron() {
+		cronHandle(processName, fn, cmd)
+	} else {
+		daemonHandle(processName, fn, cmd)
+	}
+}
+
+func daemonHandle(processName string, fn func(cmd *cobra.Command) []string, cmd *cobra.Command) {
 	createDaemonPidPath()
 	saveProcessPid(getDaemonPidFile(processName))
-
 	channel := make(chan int, 1)
 	go func(channel chan int) {
 		fn(cmd)
 	}(channel)
-
 	c := cron.New()
 	_, _ = c.AddFunc("@every 2s", func() {
 		saveProcessPid(getDaemonPidFile(processName))
 	})
 	c.Start()
-
 	select {
 	case <-channel:
 	}

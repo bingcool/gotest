@@ -9,8 +9,12 @@ import (
 	"syscall"
 )
 
+// go run main.go stop
+
+var stopCommandName = "stop"
+
 var StopCmd = &cobra.Command{
-	Use:   "stop",
+	Use:   stopCommandName,
 	Short: "stop the gofy",
 	Long:  "stop the gofy",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -26,5 +30,13 @@ var StopCmd = &cobra.Command{
 }
 
 func init() {
+	initStopParseFlag()
+}
 
+func initStopParseFlag() {
+	if os.Args[1] == stopCommandName {
+		if len(os.Args) > 2 {
+			parseFlag(StopCmd, os.Args[2:])
+		}
+	}
 }

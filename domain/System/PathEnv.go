@@ -47,7 +47,7 @@ func GetDaemonPath() string {
 }
 
 func GetCronPath() string {
-	daemonPath := filepath.Join(GetRootDir(), "domain", "Daemon")
+	daemonPath := filepath.Join(GetRootDir(), "domain", "Cron")
 	return daemonPath
 }
 

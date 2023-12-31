@@ -1,6 +1,7 @@
 package Cmd
 
 import (
+	"flag"
 	"fmt"
 	"github.com/spf13/cobra"
 	"goTest/domain/Console"
@@ -9,6 +10,8 @@ import (
 	"syscall"
 )
 
+// go run main.go daemon-stop consume-user-order
+
 var daemonStopCommandName = "daemon-stop"
 
 var DaemonStopCmd = &cobra.Command{
@@ -16,8 +19,9 @@ var DaemonStopCmd = &cobra.Command{
 	Short: "run script",
 	Long:  "run script",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		// 在每个命令执行之前执行的操作
-		// log.Printf("daemon before run ")
+		if len(args) == 0 {
+			panic("请指定停止进程名")
+		}
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		Console.NewConsole().PutCommand(cmd)
@@ -26,7 +30,15 @@ var DaemonStopCmd = &cobra.Command{
 }
 
 func init() {
-	initParseFlag(daemonStopCommandName, DaemonStopCmd)
+	initDaemonStopFlag()
+}
+
+func initDaemonStopFlag() {
+	if os.Args[1] == daemonStopCommandName {
+		if len(os.Args) > 3 {
+			parseFlag(DaemonStopCmd, flag.Args()[3:])
+		}
+	}
 }
 
 func stopDaemon(args []string) {
