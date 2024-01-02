@@ -77,9 +77,12 @@ func startCron(cmd *cobra.Command, args []string) {
 	crontab := cron.New(cron.WithSeconds(), cron.WithChain(cron.SkipIfStillRunning(cron.DefaultLogger)))
 	for processName, scheduleItem := range scheduleList {
 		specFn := scheduleItem["spec"]
-		_, _ = crontab.AddFunc(parseSpec(specFn(cmd)), func() {
-			execDaemonProcess(processName, args)
-		})
+		specSlice := specFn(cmd)
+		for _, value := range specSlice {
+			_, _ = crontab.AddFunc(value, func() {
+				execDaemonProcess(processName, args)
+			})
+		}
 		time.Sleep(100 * time.Microsecond)
 	}
 	_, _ = crontab.AddFunc("@every 10s", func() {
@@ -87,10 +90,6 @@ func startCron(cmd *cobra.Command, args []string) {
 	})
 	crontab.Start()
 	select {}
-}
-
-func parseSpec(specSlice []string) string {
-	return specSlice[0]
 }
 
 func execDaemonProcess(processName string, args []string) {
