@@ -24,7 +24,7 @@ func NewOrder(c *gin.Context) *OrderController {
 
 // ListOrderReqDto 请求结构体
 type ListOrderReqDto struct {
-	OrderId  int `json:"order_id" form:"order_id"`
+	OrderId  int `json:"order_id" form:"order_id" binding:"required,gt=0"`
 	OrderId1 int `json:"order_id1" form:"order_id1"`
 }
 

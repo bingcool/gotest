@@ -27,7 +27,7 @@ func Signal(sigs os.Signal, fn HandleSignal) {
 // EventLoopSigtermSignal 信号15平滑kill进程
 func EventLoopSigtermSignal() {
 	Signal(syscall.SIGTERM, func(sigs os.Signal) {
-		fmt.Println("开始推出进程Sigterm")
+		fmt.Println("开始退出进程Sigterm")
 		time.Sleep(5 * time.Second)
 		os.Exit(0)
 	})
