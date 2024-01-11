@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"goTest/domain/System"
+	"goTest/domain/Test"
 	"runtime"
 	"time"
 )
@@ -10,13 +11,15 @@ import (
 //var threadProfile = pprof.Lookup("threadcreate")
 
 func main() {
-	test1()
+	//test1()
 
 	//System.GetRootDir()
 	//err := Cmd.Execute()
 	//if err != nil {
 	//	log.Fatal("启动错误")
 	//}
+
+	Test.TestSyncMap()
 }
 
 func init() {
@@ -26,6 +29,7 @@ func init() {
 func test1() {
 	now := time.Now()
 	now.Second()
+
 	//fmt.Println(now.Year(), int(now.Month()), int(now.Day()), now.Hour(), now.Minute(), now.Second())
 	//month := fmt.Sprintf("%02d", int(now.Month()))
 	//fmt.Println(month)
