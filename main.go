@@ -19,7 +19,7 @@ func main() {
 	//	log.Fatal("启动错误")
 	//}
 
-	Test.TestSyncMap()
+	Test.TestStruct()
 }
 
 func init() {
