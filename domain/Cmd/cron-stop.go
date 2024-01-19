@@ -28,6 +28,7 @@ var CronStopCmd = &cobra.Command{
 				fmt.Println("Error finding process:", err)
 				return
 			}
+			fmt.Println("cron service stop")
 			_ = process.Signal(syscall.SIGTERM)
 		}
 	},

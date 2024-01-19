@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"goTest/domain/System"
-	"goTest/domain/Test"
+	"gopkg.in/yaml.v2"
 	"runtime"
 	"time"
 )
@@ -19,17 +19,19 @@ func main() {
 	//	log.Fatal("启动错误")
 	//}
 
-	Test.TestStruct()
+	//Test.TestImplode()
 }
 
 func init() {
-	fmt.Println("Main package another init")
+	fmt.Println("Main package init")
 }
 
 func test1() {
 	now := time.Now()
 	now.Second()
 
+	aa := yaml.Decoder{}
+	fmt.Println(aa)
 	//fmt.Println(now.Year(), int(now.Month()), int(now.Day()), now.Hour(), now.Minute(), now.Second())
 	//month := fmt.Sprintf("%02d", int(now.Month()))
 	//fmt.Println(month)

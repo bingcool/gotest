@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/juju/errors"
 	"github.com/shirou/gopsutil/v3/mem"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -114,6 +115,7 @@ type OrderModel struct {
 	OrderId uint32
 }
 
+// TestStruct 测试结构体初始化
 func TestStruct() {
 	//字面量初始化
 	order := OrderModel{}
@@ -121,4 +123,41 @@ func TestStruct() {
 	var order1 OrderModel
 	fmt.Println(order)
 	fmt.Println(order1)
+}
+
+// TestStringIndex 字符串分割处理
+func TestStringIndex() {
+	username := "bingcool@email.com"
+	// 获取字符所在字符串的索引位置，并返回
+	idx := strings.Index(username, "@")
+	var name string
+	// 存在这个字符并且返回，那么这个idx将不会为-1
+	if idx != -1 {
+		// 读取这个字符串的切片数组
+		name = username[:idx]
+	} else {
+		name = username
+	}
+
+	fmt.Println(name)
+
+	// 使用1.18版本后新增的方法strings.Cut()
+	before, after, ok := strings.Cut(username, "@")
+	if !ok {
+		panic("分割报错了")
+	}
+
+	fmt.Println(before, after)
+}
+
+// TestImplode 字符串与字符串切片之间的转换
+func TestImplode() {
+	items := []string{"中国", "人民", "解放军"}
+	str := strings.Join(items, "@")
+	fmt.Println(str)
+
+	//
+	items = strings.Split(str, "@")
+	fmt.Println(items)
+
 }

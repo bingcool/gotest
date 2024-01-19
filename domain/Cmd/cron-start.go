@@ -29,6 +29,7 @@ var CronStartCmd = &cobra.Command{
 		if value, _ := cmd.Flags().GetString("fork_cron"); value == "no" {
 			startCron(cmd, args)
 		} else {
+			fmt.Println("cron service daemon start")
 			forkCronProcess(args)
 			time.Sleep(1 * time.Second)
 			os.Exit(0)
@@ -89,6 +90,7 @@ func startCron(cmd *cobra.Command, args []string) {
 		saveCronServerPid(os.Getpid())
 	})
 	crontab.Start()
+	fmt.Println("cron service start.")
 	select {}
 }
 

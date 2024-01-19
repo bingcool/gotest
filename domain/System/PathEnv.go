@@ -47,10 +47,6 @@ func GetDaemonPath() string {
 }
 
 func GetCronPath() string {
-	daemonPath := filepath.Join(GetRootDir(), "domain", "Cron")
-	return daemonPath
-}
-
-func MyTestAdd(a int, b int) int {
-	return a + b
+	cronPath := filepath.Join(GetRootDir(), "domain", "Cron")
+	return cronPath
 }

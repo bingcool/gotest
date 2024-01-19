@@ -43,13 +43,21 @@ func getProcessPid(pidFilePath string) int {
 }
 
 func getDaemonPidPath() string {
-	folderPath := filepath.Join(System.GetDaemonPath(), "pid")
-	return folderPath
+	pidPath := filepath.Join(System.GetDaemonPath(), "pid")
+	_, err := os.Stat(pidPath)
+	if err != nil {
+		createPidPath(pidPath)
+	}
+	return pidPath
 }
 
 func getCronPidPath() string {
-	folderPath := filepath.Join(System.GetCronPath(), "pid")
-	return folderPath
+	pidPath := filepath.Join(System.GetCronPath(), "pid")
+	_, err := os.Stat(pidPath)
+	if err != nil {
+		createPidPath(pidPath)
+	}
+	return pidPath
 }
 
 func saveCronServerPid(pid int) {
