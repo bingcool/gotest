@@ -64,6 +64,7 @@ func forkCronProcess(args []string) {
 		newArgs = append(newArgs, "--fork_cron=no")
 		newCmd := exec.Command(os.Args[0], newArgs...)
 		newCmd.Stdin = os.Stdin
+		newCmd.Stdout = os.Stdout
 		newCmd.Stderr = os.Stderr
 		err := newCmd.Start()
 		if err != nil {

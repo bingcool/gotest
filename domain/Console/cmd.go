@@ -3,7 +3,8 @@ package Console
 import "github.com/spf13/cobra"
 
 type ScheduleFunc func(cmd *cobra.Command) []string
-type ScheduleType map[string]map[string]ScheduleFunc
+type ScheduleMap map[string]ScheduleFunc
+type ScheduleType map[string]ScheduleMap
 
 type SetCommandInterface interface {
 	PutCommand()
