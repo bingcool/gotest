@@ -87,7 +87,6 @@ func run(cmd *cobra.Command, args []string) {
 // StartServer 解析
 func startServer() {
 	r := gin.Default()
-	// 设置日志中间件，主要用于打印请求日志
 	// 设置Recovery中间件，主要用于拦截panic错误，不至于导致进程崩掉
 	Middlewares.SetGlobalMiddleware(r)
 	Router.SetupProductRouter(r)

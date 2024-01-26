@@ -12,8 +12,7 @@ var rootCmd = &cobra.Command{
 	Use:   "gofy",
 	Short: "My Gin application",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("init running")
-		run(cmd, args)
+		fmt.Println("root running")
 	},
 }
 
@@ -34,7 +33,7 @@ func init() {
 	rootCmd.AddCommand(CronStartCmd)
 	rootCmd.AddCommand(CronStopCmd)
 
-	StartCmd.Flags().StringVar(&Env, "environment", "dev", "environment of system")
+	StartCmd.Flags().StringVar(&Env, "env", "dev", "environment of system")
 }
 
 // Execute executes the root command.
@@ -49,11 +48,17 @@ func parseFlag(runCmd *cobra.Command, flags []string) {
 		if len(item) != 2 {
 			continue
 		}
+		flagName := strings.Replace(item[0], charsToRemove, "", 2)
+		flagValue := item[1]
+		// flag已存在则跳过
+		if runCmd.Flags().Lookup(flagName) != nil {
+			continue
+		}
+
 		var flagNameString string
 		var flagNameInt int
 		var flagNameFloat float64
-		flagName := strings.Replace(item[0], charsToRemove, "", 2)
-		flagValue := item[1]
+
 		if Util.IsNumber(flagValue) {
 			if Util.IsInt(flagValue) {
 				flagValueNumber, _ := strconv.Atoi(flagValue)

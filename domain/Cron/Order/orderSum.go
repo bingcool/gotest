@@ -7,11 +7,9 @@ import (
 )
 
 func Run(cmd *cobra.Command) {
-
 	name, _ := cmd.Flags().GetString("name")
 	fmt.Println("cron run......", name)
 	time.Sleep(1 * time.Second)
-
 }
 
 func Run1(cmd *cobra.Command) {

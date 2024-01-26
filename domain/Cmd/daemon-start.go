@@ -48,12 +48,15 @@ func initDaemonStartFlags() {
 			panic(processName + "找不到对应的flags")
 		}
 
-		flags := flagsFn(DaemonStartCmd)
-		parseFlag(DaemonStartCmd, flags)
+		// cli 传进来的flag参数优于配置文件的自定义的参数
 		if len(os.Args) > 2 {
 			fmt.Println(os.Args)
 			parseFlag(DaemonStartCmd, os.Args[2:])
 		}
+
+		// 配置文件flag参数
+		flags := flagsFn(DaemonStartCmd)
+		parseFlag(DaemonStartCmd, flags)
 	}
 }
 

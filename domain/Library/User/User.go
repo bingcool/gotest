@@ -21,7 +21,7 @@ func (user *User) SetAddress(province string, city string, district string) {
 	user.Address.Province = province
 	user.Address.City = city
 	user.Address.District = district
-	user.Address.sex = 1
+	user.Address.Sex = 1
 }
 
 func (user *User) GetAddress() Address {

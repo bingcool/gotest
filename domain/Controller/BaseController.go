@@ -2,7 +2,7 @@ package Controller
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
+	"goTest/domain/Middlewares"
 	"reflect"
 	"strconv"
 )
@@ -31,28 +31,7 @@ func (b *BaseController) Construct(c *gin.Context) *BaseController {
 	return b
 }
 
-// ResponseStruct returnJson 响应结构体
-type ResponseStruct struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
-	Data any    `json:"data"`
-}
-
 func (b *BaseController) returnJson(data any) {
-	valueType := reflect.ValueOf(data).Kind()
-	switch valueType {
-	case reflect.Slice:
-		fallthrough
-	case reflect.Map:
-		if reflect.ValueOf(data).Len() == 0 {
-			data = make([]any, 0)
-		}
-	default:
-	}
-	// 响应结构体
-	responseStruct := &ResponseStruct{}
-	responseStruct.Code = 0
-	responseStruct.Msg = "success"
-	responseStruct.Data = data
-	b.context.JSON(http.StatusOK, responseStruct)
+	response := Middlewares.Response{}
+	response.Write(0, data, "success")(b.context)
 }

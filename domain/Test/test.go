@@ -158,6 +158,9 @@ func TestImplode() {
 
 	//
 	items = strings.Split(str, "@")
-	fmt.Println(items)
+	for _, v := range items {
+		fmt.Println(v)
+	}
+	//fmt.Println(items)
 
 }

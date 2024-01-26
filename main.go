@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"goTest/domain/Cmd"
 	"goTest/domain/System"
 	"gopkg.in/yaml.v2"
 	"runtime"
@@ -13,11 +14,8 @@ import (
 func main() {
 	//test1()
 
-	//System.GetRootDir()
-	//err := Cmd.Execute()
-	//if err != nil {
-	//	log.Fatal("启动错误")
-	//}
+	System.GetRootDir()
+	_ = Cmd.Execute()
 
 	//Test.TestImplode()
 }

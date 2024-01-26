@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"goTest/domain/Go"
 	LibraryOrder "goTest/domain/Library/Order"
-	"log"
 )
 
 // OrderController 定义结构体
@@ -41,10 +40,6 @@ func (Order *OrderController) ListOrder(c *gin.Context) {
 	listOrderReqDto := ListOrderReqDto{}
 	Order.bindToReqDtoStruct(&listOrderReqDto)
 
-	//userId := Order.UserId
-	fmt.Println("POST", listOrderReqDto.OrderId)
-	fmt.Println("GET", listOrderReqDto.OrderId1)
-
 	orderService := &LibraryOrder.OrderService{}
 	result := orderService.GetOrderList(0)
 	var list []ListOrderDto
@@ -64,20 +59,11 @@ func (Order *OrderController) ListOrder(c *gin.Context) {
 		i++
 	}
 
-	m := map[string]any{"name": "bingcool"}
+	//m := map[string]any{"name": "bingcool"}
 	//ch := make(chan any)
 	Go.Run(func(ctx Go.Context) {
 		fmt.Println(ctx.BucketMap["name"])
-	}, Go.Context{
-		BucketMap: m,
-	})
-
-	log.Println("This is a log message.")
-
-	_, err := gin.DefaultWriter.Write([]byte("Request: " + c.Request.URL.Path + "\n"))
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	}, Go.Context{})
 
 	// 读取flags参数
 	//myname, _ := Console.GetCmd().Flags().GetString("myname")

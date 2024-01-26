@@ -27,7 +27,7 @@ var CronStartCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		Console.NewConsole().PutCommand(cmd)
 		if value, _ := cmd.Flags().GetString("fork_cron"); value == "no" {
-			startCron(cmd, args)
+			startCron(cmd)
 		} else {
 			fmt.Println("cron service daemon start")
 			forkCronProcess(args)
@@ -73,7 +73,7 @@ func forkCronProcess(args []string) {
 	}
 }
 
-func startCron(cmd *cobra.Command, args []string) {
+func startCron(cmd *cobra.Command) {
 	saveCronServerPid(os.Getpid())
 	scheduleList := *Cron.RegisterCronSchedule()
 	crontab := cron.New(cron.WithSeconds(), cron.WithChain(cron.SkipIfStillRunning(cron.DefaultLogger)))
@@ -82,7 +82,7 @@ func startCron(cmd *cobra.Command, args []string) {
 		specSlice := specFn(cmd)
 		for _, value := range specSlice {
 			_, _ = crontab.AddFunc(value, func() {
-				execDaemonProcess(processName, args)
+				execDaemonProcess(processName)
 			})
 		}
 		time.Sleep(100 * time.Microsecond)
@@ -95,12 +95,13 @@ func startCron(cmd *cobra.Command, args []string) {
 	select {}
 }
 
-func execDaemonProcess(processName string, args []string) {
+func execDaemonProcess(processName string) {
 	osName := runtime.GOOS
 	switch osName {
 	// linux，macos
 	case "linux", "darwin":
 		newArgs := make([]string, 0)
+		//调用拉起新守护进程处理定时任务
 		newArgs = append(newArgs, daemonStartCommandName, processName)
 		newArgs = append(newArgs, "--from-flag=cron")
 		newCmd := exec.Command(os.Args[0], newArgs...)

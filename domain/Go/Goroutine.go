@@ -15,8 +15,8 @@ type Context struct {
 func Run(callback goFunc, ctx Context) {
 	go func() {
 		defer func() {
-			if r := recover(); r != nil {
-				fmt.Println("Recovered:", r)
+			if err := recover(); err != nil {
+
 			}
 		}()
 		callback(ctx)
