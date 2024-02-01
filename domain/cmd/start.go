@@ -97,7 +97,7 @@ func startServer() {
 		system.SaveMainPid()
 	})
 
-	err := r.Run(":8080")
+	err := r.Run(":9502")
 	// 监听并在 0.0.0.0:8080 上启动服务
 	if err != nil {
 		log.Fatal("启动失败")

@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-//var threadProfile = pprof.Lookup("threadcreate")
+var Name = "bingcool"
 
 func main() {
 	//test1()

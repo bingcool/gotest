@@ -1,6 +1,8 @@
 package system
 
 import (
+	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 )
@@ -28,6 +30,12 @@ func GetRootDir() string {
 
 func GetStoragePath() string {
 	storagePath := filepath.Join(GetRootDir(), "domain", "storage")
+	if exists, _ := PathExist(storagePath); !exists {
+		err := os.MkdirAll(storagePath, os.ModePerm)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
 	return storagePath
 }
 
@@ -49,4 +57,15 @@ func GetDaemonPath() string {
 func GetCronPath() string {
 	cronPath := filepath.Join(GetRootDir(), "domain", "crontab")
 	return cronPath
+}
+
+func PathExist(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
 }
