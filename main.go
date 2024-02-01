@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"goTest/domain/Cmd"
-	"goTest/domain/System"
+	"goTest/domain/cmd"
+	"goTest/domain/system"
 	"gopkg.in/yaml.v2"
 	"runtime"
 	"time"
@@ -14,14 +14,14 @@ import (
 func main() {
 	//test1()
 
-	System.GetRootDir()
-	_ = Cmd.Execute()
+	system.GetRootDir()
+	_ = cmd.Execute()
 
-	//Test.TestImplode()
+	//test.TestImplode()
 }
 
 func init() {
-	fmt.Println("Main package init")
+	//fmt.Println("Main package init")
 }
 
 func test1() {
@@ -73,7 +73,7 @@ func test() {
 	runtime.GOMAXPROCS(1)
 
 	// 信号监听
-	System.EventLoopSigtermSignal()
+	system.EventLoopSigtermSignal()
 
 	fmt.Println("start start ")
 	//debug.SetMaxThreads(10)
