@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"flag"
+	"github.com/spf13/cobra"
 	"goTest/domain/system"
-	"goTest/domain/util"
 	"log"
 	"os"
 	"path/filepath"
@@ -100,17 +100,20 @@ func createCronPidPath() {
 	createPidPath(system.GetCronPath())
 }
 
-func isFork(args []string) bool {
-
-	if exist, _ := util.ContainsInSliceString(args, "d"); exist == true {
+func isFork(cmd *cobra.Command) bool {
+	if value, _ := cmd.Flags().GetInt("daemon"); value == 1 {
 		return true
 	}
-
-	if exist, _ := util.ContainsInSliceString(args, "D"); exist == true {
-		return true
-	}
-
 	return false
+}
+
+var daemonFlag int
+
+func initDaemonFlags(cmd *cobra.Command) {
+	// 初始化系统flags的默认值
+	if cmd.Flags().Lookup("daemon") == nil {
+		cmd.Flags().IntVar(&daemonFlag, "daemon", 0, "--fork-cron=0 or --fork-cron=1")
+	}
 }
 
 func isProcessRunning(pid int) bool {
@@ -130,7 +133,7 @@ func isFromCron() bool {
 	flag.Parse()
 	list := flag.Args()
 	for _, item := range list {
-		if item == "--from_flag=cron" {
+		if item == "--from-flag=cron" {
 			return true
 		}
 	}

@@ -37,6 +37,9 @@ func init() {
 
 func initDaemonStartFlags() {
 	if os.Args[1] == daemonStartCommandName {
+		if len(os.Args) < 3 {
+			panic("请指定进程名称")
+		}
 		processName := os.Args[2]
 		scheduleList := getSchedule()
 		processItemMap, isExist := scheduleList[processName]
@@ -50,7 +53,6 @@ func initDaemonStartFlags() {
 
 		// cli 传进来的flag参数优于配置文件的自定义的参数
 		if len(os.Args) > 2 {
-			fmt.Println(os.Args)
 			parseFlag(DaemonStartCmd, os.Args[2:])
 		}
 
@@ -58,6 +60,7 @@ func initDaemonStartFlags() {
 		flags := flagsFn(DaemonStartCmd)
 		parseFlag(DaemonStartCmd, flags)
 	}
+	initDaemonFlags(DaemonStartCmd)
 }
 
 func getSchedule() console.ScheduleType {
@@ -84,7 +87,7 @@ func startDaemon(cmd *cobra.Command, args []string) {
 		panic(processName + "找不到对应的处理函数")
 	}
 
-	if isFork(args) {
+	if isFork(cmd) {
 		forkDaemonProcess(args)
 		os.Exit(0)
 	} else {

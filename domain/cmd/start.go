@@ -53,7 +53,7 @@ func initStartParseFlag() {
 func run(cmd *cobra.Command, args []string) {
 	console.NewConsole().PutCommand(cmd)
 
-	if isFork(args) {
+	if isFork(cmd) {
 		osName := runtime.GOOS
 		switch osName {
 		// linux，macos
@@ -97,7 +97,7 @@ func startServer() {
 		system.SaveMainPid()
 	})
 
-	err := r.Run(":9502")
+	err := r.Run(":8080")
 	// 监听并在 0.0.0.0:8080 上启动服务
 	if err != nil {
 		log.Fatal("启动失败")

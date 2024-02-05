@@ -16,11 +16,6 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-// Env 全局flags
-var (
-	Env string
-)
-
 func init() {
 	rootCmd.AddCommand(StartCmd)
 	rootCmd.AddCommand(StopCmd)
@@ -32,8 +27,6 @@ func init() {
 	rootCmd.AddCommand(DaemonStopAllCmd)
 	rootCmd.AddCommand(CronStartCmd)
 	rootCmd.AddCommand(CronStopCmd)
-
-	StartCmd.Flags().StringVar(&Env, "env", "dev", "environment of system")
 }
 
 // Execute executes the root command.

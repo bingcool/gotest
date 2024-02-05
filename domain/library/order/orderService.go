@@ -9,6 +9,7 @@ import (
 type OrderService struct {
 }
 
+// NewOrderService 实例化对象
 func NewOrderService() *OrderService {
 	return &OrderService{}
 }

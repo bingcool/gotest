@@ -9,8 +9,6 @@ import (
 	"time"
 )
 
-var Name = "bingcool"
-
 func main() {
 	//test1()
 

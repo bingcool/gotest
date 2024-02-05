@@ -36,11 +36,11 @@ type ListOrderDto struct {
 }
 
 // ListOrder 订单列表
-func (Order *OrderController) ListOrder(c *gin.Context) {
+func (Order *OrderController) ListOrder(ctc *gin.Context) {
 	listOrderReqDto := ListOrderReqDto{}
 	Order.bindToReqDtoStruct(&listOrderReqDto)
 
-	orderService := &LibraryOrder.OrderService{}
+	orderService := LibraryOrder.NewOrderService()
 	result := orderService.GetOrderList(0)
 	var list []ListOrderDto
 	// list := make([]ListOrderDto, 0)
@@ -88,7 +88,7 @@ func (Order *OrderController) ListOrder(c *gin.Context) {
 }
 
 // SaveOrder 保存订单信息
-func (Order *OrderController) SaveOrder(c *gin.Context) {
+func (Order *OrderController) SaveOrder(ctx *gin.Context) {
 	orderService := &LibraryOrder.OrderService{}
 	orderId := orderService.SaveOrder()
 
