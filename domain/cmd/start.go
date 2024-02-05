@@ -60,11 +60,6 @@ func run(cmd *cobra.Command, args []string) {
 		case "linux", "darwin":
 			newArgs := make([]string, 0)
 			newArgs = append(newArgs, startCommandName)
-			for _, value := range args {
-				if value != "d" && value != "D" {
-					newArgs = append(newArgs, value)
-				}
-			}
 			newCmd := exec.Command(os.Args[0], newArgs...)
 			newCmd.Stdin = os.Stdin
 			//cmd1.Stderr = os.Stderr

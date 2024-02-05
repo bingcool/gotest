@@ -136,11 +136,6 @@ func forkDaemonProcess(args []string) {
 	case "linux", "darwin":
 		newArgs := make([]string, 0)
 		newArgs = append(newArgs, daemonStartCommandName)
-		for _, value := range args {
-			if value != "d" && value != "D" {
-				newArgs = append(newArgs, value)
-			}
-		}
 		newCmd := exec.Command(os.Args[0], newArgs...)
 		newCmd.Stdin = os.Stdin
 		//newCmd.Stdout = os.Stdout
