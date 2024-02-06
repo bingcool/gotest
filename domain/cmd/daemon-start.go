@@ -7,9 +7,9 @@ import (
 	"goTest/domain/console"
 	"goTest/domain/crontab"
 	"goTest/domain/daemon"
+	"goTest/domain/system"
 	"os"
 	"os/exec"
-	"runtime"
 )
 
 // go run main.go daemon-start consume-user-order --name=bingcool
@@ -21,9 +21,7 @@ var DaemonStartCmd = &cobra.Command{
 	Short: "run script",
 	Long:  "run script",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			panic("请指定启动进程名")
-		}
+
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		console.NewConsole().PutCommand(cmd)
@@ -38,8 +36,9 @@ func init() {
 func initDaemonStartFlags() {
 	if os.Args[1] == daemonStartCommandName {
 		if len(os.Args) < 3 {
-			panic("请指定进程名称")
+			panic("请指定启动进程名")
 		}
+
 		processName := os.Args[2]
 		scheduleList := getSchedule()
 		processItemMap, isExist := scheduleList[processName]
@@ -59,8 +58,9 @@ func initDaemonStartFlags() {
 		// 配置文件flag参数
 		flags := flagsFn(DaemonStartCmd)
 		parseFlag(DaemonStartCmd, flags)
+
+		initDaemonFlags(DaemonStartCmd)
 	}
-	initDaemonFlags(DaemonStartCmd)
 }
 
 func getSchedule() console.ScheduleType {
@@ -130,12 +130,10 @@ func daemonHandle(processName string, fn func(cmd *cobra.Command) []string, cmd 
 }
 
 func forkDaemonProcess(args []string) {
-	osName := runtime.GOOS
-	switch osName {
-	// linux，macos
-	case "linux", "darwin":
+	if system.IsLinux() || system.IsMacos() {
+		processName := args[0]
 		newArgs := make([]string, 0)
-		newArgs = append(newArgs, daemonStartCommandName)
+		newArgs = append(newArgs, daemonStartCommandName, processName)
 		newCmd := exec.Command(os.Args[0], newArgs...)
 		newCmd.Stdin = os.Stdin
 		//newCmd.Stdout = os.Stdout

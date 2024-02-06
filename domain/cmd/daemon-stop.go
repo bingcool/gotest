@@ -35,6 +35,10 @@ func init() {
 
 func initDaemonStopFlag() {
 	if os.Args[1] == daemonStopCommandName {
+		if len(os.Args) < 3 {
+			panic("请指定停止进程名")
+		}
+
 		if len(os.Args) > 3 {
 			parseFlag(DaemonStopCmd, flag.Args()[3:])
 		}

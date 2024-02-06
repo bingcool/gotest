@@ -49,8 +49,10 @@ func initCronStartFlags() {
 		if len(os.Args) > 2 {
 			parseFlag(CronStartCmd, os.Args[2:])
 		}
+
+		initDaemonFlags(CronStartCmd)
 	}
-	initDaemonFlags(CronStartCmd)
+
 }
 
 func forkCronProcess(args []string) {

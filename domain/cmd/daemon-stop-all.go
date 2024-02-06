@@ -18,8 +18,6 @@ var DaemonStopAllCmd = &cobra.Command{
 	Short: "run script",
 	Long:  "run script",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
-		// 在每个命令执行之前执行的操作
-		// log.Printf("daemon before run ")
 	},
 	Run: func(cmd *cobra.Command, args []string) {
 		console.NewConsole().PutCommand(cmd)

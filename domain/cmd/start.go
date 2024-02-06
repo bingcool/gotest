@@ -12,7 +12,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"runtime"
 )
 
 // go run main.go start --myname=bingcool
@@ -47,33 +46,27 @@ func initStartParseFlag() {
 		if len(os.Args) > 2 {
 			parseFlag(StartCmd, os.Args[2:])
 		}
+
+		initDaemonFlags(StartCmd)
 	}
 }
 
 func run(cmd *cobra.Command, args []string) {
 	console.NewConsole().PutCommand(cmd)
-
-	if isFork(cmd) {
-		osName := runtime.GOOS
-		switch osName {
-		// linux，macos
-		case "linux", "darwin":
-			newArgs := make([]string, 0)
-			newArgs = append(newArgs, startCommandName)
-			newCmd := exec.Command(os.Args[0], newArgs...)
-			newCmd.Stdin = os.Stdin
-			//cmd1.Stderr = os.Stderr
-			err := newCmd.Start()
+	if isFork(cmd) && (system.IsLinux() || system.IsMacos()) {
+		newArgs := make([]string, 0)
+		newArgs = append(newArgs, startCommandName)
+		newCmd := exec.Command(os.Args[0], newArgs...)
+		newCmd.Stdin = os.Stdin
+		//cmd1.Stderr = os.Stderr
+		err := newCmd.Start()
+		if err != nil {
+			_, err := fmt.Fprintf(os.Stderr, "[-] Error: %s\n", err)
 			if err != nil {
-				_, err := fmt.Fprintf(os.Stderr, "[-] Error: %s\n", err)
-				if err != nil {
-					os.Exit(0)
-				}
+				os.Exit(0)
 			}
-			os.Exit(0)
-		default:
-			startServer()
 		}
+		os.Exit(0)
 	} else {
 		startServer()
 	}

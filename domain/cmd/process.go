@@ -100,20 +100,24 @@ func createCronPidPath() {
 	createPidPath(system.GetCronPath())
 }
 
-func isFork(cmd *cobra.Command) bool {
-	if value, _ := cmd.Flags().GetInt("daemon"); value == 1 {
-		return true
-	}
-	return false
-}
-
 var daemonFlag int
 
 func initDaemonFlags(cmd *cobra.Command) {
 	// 初始化系统flags的默认值
 	if cmd.Flags().Lookup("daemon") == nil {
-		cmd.Flags().IntVar(&daemonFlag, "daemon", 0, "--fork-cron=0 or --fork-cron=1")
+		cmd.Flags().IntVar(&daemonFlag, "daemon", 0, "--daemon=0 or --daemon=1")
 	}
+}
+
+func isFork(cmd *cobra.Command) bool {
+	return isDaemon(cmd)
+}
+
+func isDaemon(cmd *cobra.Command) bool {
+	if value, _ := cmd.Flags().GetInt("daemon"); value == 1 {
+		return true
+	}
+	return false
 }
 
 func isProcessRunning(pid int) bool {
