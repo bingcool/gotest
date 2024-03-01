@@ -5,12 +5,10 @@ import (
 	"goTest/domain/cmd"
 	"goTest/domain/system"
 	"gopkg.in/yaml.v2"
-	"runtime"
 	"time"
 )
 
 func main() {
-	//test1()
 
 	system.GetRootDir()
 	_ = cmd.Execute()
@@ -61,31 +59,4 @@ func test1() {
 	ch <- 10
 	ch <- 11
 	fmt.Println("发送成功")
-}
-
-func test() {
-	numCPU := runtime.NumCPU()
-	fmt.Println("Number of CPUs:", numCPU)
-
-	// 设置线程数量为 4
-	runtime.GOMAXPROCS(1)
-
-	// 信号监听
-	system.EventLoopSigtermSignal()
-
-	fmt.Println("start start ")
-	//debug.SetMaxThreads(10)
-
-	isErrDoneChan := make(chan int, 1)
-	go func() {
-		time.Sleep(1 * time.Hour)
-		isErrDoneChan <- 1
-	}()
-
-	select {
-	case <-isErrDoneChan:
-		//发送消息给管理员
-		fmt.Println("hhhhh")
-	}
-	time.Sleep(1 * time.Second)
 }

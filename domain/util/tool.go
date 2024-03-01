@@ -174,8 +174,8 @@ func GetStrPointerVal(str *string) (resp string) {
 	return
 }
 
-// ToLowerFirstSting 首字母小写
-func ToLowerFirstSting(s string) string {
+// ToLowerFirstString 首字母小写
+func ToLowerFirstString(s string) string {
 	if s == "" {
 		return ""
 	}
@@ -184,8 +184,8 @@ func ToLowerFirstSting(s string) string {
 	return string(rs)
 }
 
-// ToUpperFirstSting 首字母大写
-func ToUpperFirstSting(s string) string {
+// ToUpperFirstString 首字母大写
+func ToUpperFirstString(s string) string {
 	if s == "" {
 		return ""
 	}

@@ -5,9 +5,8 @@ all: build
 build:
 	@go build -v .
 
-tool:
+vet :
 	go vet ./...; true
-	gofmt -w .
 
 lint:
 	golint ./...

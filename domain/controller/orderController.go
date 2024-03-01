@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"goTest/domain/Go"
 	LibraryOrder "goTest/domain/library/order"
@@ -62,7 +61,7 @@ func (Order *OrderController) ListOrder(ctc *gin.Context) {
 	//m := map[string]any{"name": "bingcool"}
 	//ch := make(chan any)
 	Go.Run(func(ctx Go.Context) {
-		fmt.Println(ctx.BucketMap["name"])
+		//fmt.Println(ctx.BucketMap["name"])
 	}, Go.Context{})
 
 	// 读取flags参数

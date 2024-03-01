@@ -55,7 +55,7 @@ func stopDaemon(args []string) {
 func killProcess(pid int, filePath string) {
 	process, err := os.FindProcess(pid)
 	if err != nil {
-		log.Printf("Error finding process:", err)
+		log.Printf("Error finding process", err.Error())
 		if len(filePath) > 0 {
 			err := os.Remove(filePath)
 			if err != nil {

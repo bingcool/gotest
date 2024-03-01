@@ -1,7 +1,6 @@
 package factory
 
 import (
-	"fmt"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"runtime"
@@ -16,8 +15,7 @@ var (
 // GetDb 初始化数据库连接
 func GetDb() *gorm.DB {
 	osName := runtime.GOOS
-	fmt.Println(osName)
-
+	//fmt.Println(osName)
 	switch osName {
 	case "darwin":
 		dsn := "root:123456@tcp(127.0.0.1:3307)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
