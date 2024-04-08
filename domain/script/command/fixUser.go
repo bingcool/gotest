@@ -14,7 +14,9 @@ func Test1(cmd *cobra.Command) {
 	kk, _ := cmd.Flags().GetString("kk")
 	price, _ := cmd.Flags().GetFloat64("price")
 
-	fmt.Println(name, age, kk, price)
+	orderId, _ := cmd.Flags().GetInt("order_id")
+
+	fmt.Println(name, age, kk, price, orderId)
 
 	orderService := order.NewOrderService()
 	list := orderService.GetOrderList(1691463646)

@@ -130,7 +130,7 @@ func TestMapsToStruct(t *testing.T) {
 }
 
 func TestArr(t *testing.T) {
-	// 数组初始化对应类型的零值
+	// 数组初始化将自动生复制对应类型的零值
 	var a [5]int
 	fmt.Println(a)
 }

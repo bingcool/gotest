@@ -1,0 +1,116 @@
+package test
+
+import (
+	"fmt"
+	"goTest/domain/system"
+	"runtime"
+	"testing"
+	"time"
+)
+
+func TestTick(t *testing.T) {
+	// 获取时间戳
+	nowTime := time.Now().Unix() + 11
+
+	ticker1 := time.NewTicker(5 * time.Second)
+	// 一定要调用Stop()，回收资源
+	defer ticker1.Stop()
+
+	// 循环中等待时间是否已达到
+	go func(t *time.Ticker) {
+		for {
+			// 在改协程中阻塞等待，不影响其他协程的执行
+			_ = <-t.C
+
+			nowTime1 := time.Now().Unix()
+			// 满足条件，认为控制stop定时器
+			if nowTime1 > nowTime {
+				t.Stop()
+			} else {
+				fmt.Println("Ticker:", time.Now().Format("2006-01-02 15:04:05"))
+			}
+
+		}
+	}(ticker1)
+
+	println("Ticker start")
+	time.Sleep(30 * time.Second)
+	fmt.Println("ok")
+}
+
+func TestTime(t *testing.T) {
+	ticker := time.Tick(1 * time.Second)
+	// 在协程中创建一个定时器，不影响往下面的流程的执行
+	go func() {
+		for {
+			select {
+			case <-ticker:
+				fmt.Println("ticker time")
+			default:
+
+			}
+		}
+	}()
+
+	// 创建channel,协程间通信
+	ch := make(chan int, 1)
+	go func(c chan int) {
+		for {
+			select {
+			// 没有设置default分支，将在这里阻塞一直等待
+			case ret := <-c:
+				fmt.Println("接收成功", ret)
+			}
+		}
+	}(ch) // 启用goroutine从通道接收值
+	ch <- 10
+	ch <- 11
+
+	time.Sleep(5 * time.Second)
+}
+
+func TestSignal(t *testing.T) {
+	numCPU := runtime.NumCPU()
+	fmt.Println("Number of CPUs:", numCPU)
+
+	// 获取当前协程的数量
+	coroutineNum := runtime.NumGoroutine()
+	fmt.Println("当前协程数量：", coroutineNum)
+
+	// 设置线程数量为 4
+	runtime.GOMAXPROCS(1)
+
+	// 信号监听
+	system.EventLoopSigtermSignal()
+
+	fmt.Println("start start ")
+	//debug.SetMaxThreads(10)
+
+	isErrDoneChan := make(chan int, 1)
+	go func() {
+		time.Sleep(10 * time.Second)
+		fmt.Println("开始向channel发送消息")
+		isErrDoneChan <- 1
+	}()
+
+	select {
+	// 没设置default,则一直阻塞等待。设置了，如果channel没有数据就绪,直接执行default。同时子协程也会退出
+	case <-isErrDoneChan:
+		//发送消息给管理员
+		fmt.Println("channel接受到信息")
+		//default:
+		//	fmt.Println("default")
+	}
+	time.Sleep(1 * time.Second)
+}
+
+func TestAfter(t *testing.T) {
+	// 一次性定时任务
+	afterTimer := time.AfterFunc(5*time.Second, func() {
+		fmt.Println("after time")
+	})
+
+	defer afterTimer.Stop()
+
+	time.Sleep(10 * time.Second)
+}

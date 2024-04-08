@@ -119,11 +119,13 @@ func daemonHandle(processName string, fn func(cmd *cobra.Command) []string, cmd 
 	go func(channel chan int) {
 		fn(cmd)
 	}(channel)
-	c := cron.New()
-	_, _ = c.AddFunc("@every 2s", func() {
+
+	cronSchedule := cron.New()
+	_, _ = cronSchedule.AddFunc("@every 2s", func() {
 		saveProcessPid(getDaemonPidFile(processName))
 	})
-	c.Start()
+	cronSchedule.Start()
+
 	select {
 	case <-channel:
 	}

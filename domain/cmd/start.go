@@ -5,6 +5,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/robfig/cron/v3"
 	"github.com/spf13/cobra"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+	_ "goTest/docs"
 	"goTest/domain/console"
 	"goTest/domain/middlewares"
 	"goTest/domain/route"
@@ -26,11 +29,15 @@ var StartCmd = &cobra.Command{
 		// 在每个命令执行之前执行的操作
 		fmt.Println("before run ")
 	},
+	PreRun: func(cmd *cobra.Command, args []string) {
 
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 		run(cmd, args)
 	},
+	PostRun: func(cmd *cobra.Command, args []string) {
 
+	},
 	PersistentPostRun: func(cmd *cobra.Command, args []string) {
 		// 在每个命令执行之后执行的操作
 		fmt.Println("after run")
@@ -84,6 +91,9 @@ func startServer() {
 	_, _ = crontab.AddFunc("@every 10s", func() {
 		system.SaveMainPid()
 	})
+
+	// swagger文档
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	err := r.Run(":8080")
 	// 监听并在 0.0.0.0:8080 上启动服务

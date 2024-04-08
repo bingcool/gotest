@@ -35,6 +35,17 @@ type ListOrderDto struct {
 }
 
 // ListOrder 订单列表
+// @Summary Get All Order list
+// @Schemes
+// @Description do ping
+// @Tags example
+// @Accept json
+// @Produce json
+// @Param creator query int true "创建者"
+// @Success 200 {string} string "ok"
+// @Failure 400 {string} string "bad request"
+// @Failure 500 {string} string "Internal Server Error"
+// @Router /api/v1/order/list [get]
 func (Order *OrderController) ListOrder(ctc *gin.Context) {
 	listOrderReqDto := ListOrderReqDto{}
 	Order.bindToReqDtoStruct(&listOrderReqDto)
