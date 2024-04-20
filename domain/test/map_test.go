@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
+	"github.com/samber/lo"
 	"testing"
 )
 
@@ -133,4 +134,19 @@ func TestArr(t *testing.T) {
 	// 数组初始化将自动生复制对应类型的零值
 	var a [5]int
 	fmt.Println(a)
+}
+
+func TestContains(t *testing.T) {
+	has := lo.Contains([]int{1, 2, 3, 4, 5}, 30)
+	fmt.Println(has)
+
+	// 自定义函数实现判断
+	has1 := lo.ContainsBy([]int{1, 2, 30, 4, 5}, func(item int) bool {
+		if item == 30 {
+			return true
+		}
+		return false
+	})
+
+	fmt.Println(has1)
 }

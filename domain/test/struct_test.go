@@ -41,3 +41,14 @@ func TestStruct1(t *testing.T) {
 	s.SetName("bingcool")
 	fmt.Println(s.Address.City) // 输出 Tom 18 High School
 }
+
+func TestStruct2(t *testing.T) {
+	var s Student
+
+	fmt.Println(s.Age)
+
+	address := Address{City: "深圳", Country: "中国"}
+	s.SetAddress(address)
+	s.SetName("bingcool")
+	fmt.Println(s.Address.City) // 输出 Tom 18 High School
+}
