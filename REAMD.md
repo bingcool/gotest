@@ -13,6 +13,8 @@ flag: cli参数输入,输出处理
 
 
 第三方常用的包：
+https://github.com/shockerli/go-awesome?tab=readme-ov-file 
+
 github.com/robfig/cron/v3: 封裝的cron的计划任务定时器的处理
 
 github.com/spf13/cobra：构建console的应用，定义各种命令   
@@ -26,6 +28,8 @@ github.com/swaggo/gin-swagger: 自动生成接口文档
 github.com/urfave/cli: 用于在Go中构建命令行工具
 
 go-playground/validator: 参数验证
+
+https://github.com/gookit/validate：参数验证   
 
 github.com/go-redis/redis/v8： redis操作库
 
@@ -60,4 +64,24 @@ https://github.com/segmentio/kafka-go 这是一个Go语言库，用于与Kafka�
 
 https://github.com/rabbitmq/amqp091-go 这是一个Go语言库，用于与RabbitMQ进行通信。它提供了许多方法来与RabbitMQ进行通信，例如创建Channel、创建Queue、创建Exchange、创建Binding、发送消息、接收消息、消费消息等。
 
+https://github.com/mattn ： 大牛项目仓库
 
+https://github.com/mattn/go-sqlite3     
+
+https://github.com/shockerli/go-awesome
+
+https://github.com/schollz/progressbar: 进度条库
+
+https://github.com/pterm/pterm ： 终端美化库
+
+golang.org/x/tools/cmd/goimports : 自动导入包规范包的位置
+
+https://github.com/bytedance/sonic?tab=readme-ov-file ： 字节开源的json库
+
+https://github.com/hashicorp/golang-lru ： LRU 缓存库·
+
+https://github.com/sourcegraph/conc ： 短小精悍的go协程库
+
+github.com/go-resty/resty： curl的包，类似php的guzzle-client包，封装了http请求，支持json、xml、form、multipart、文件上传、文件下载、重试、超时、代理、认证、压缩、日志、监控等
+
+github.com/gofrs/uuid： Go语言库，用于生成UUID

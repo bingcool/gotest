@@ -16,6 +16,7 @@ func Signal(sigs os.Signal, fn HandleSignal) {
 	go func() {
 		defer close(ch)
 		for {
+			// ch未接收到信号，将会一直阻塞
 			s := <-ch
 			if s == sigs {
 				fn(sigs)
@@ -33,7 +34,7 @@ func EventLoopSigtermSignal() {
 	})
 
 	Signal(syscall.SIGINT, func(sigs os.Signal) {
-		fmt.Println("开始推出进程Sigint")
+		fmt.Println("开始退出进程Sigint")
 		time.Sleep(5 * time.Second)
 		os.Exit(0)
 	})

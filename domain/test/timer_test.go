@@ -3,6 +3,7 @@ package test
 import (
 	"fmt"
 	"goTest/domain/system"
+	"math"
 	"runtime"
 	"testing"
 	"time"
@@ -113,4 +114,31 @@ func TestAfter(t *testing.T) {
 	defer afterTimer.Stop()
 
 	time.Sleep(10 * time.Second)
+}
+
+func TestTicker(t *testing.T) {
+	duration, _ := time.ParseDuration("1h33m29s")
+	fmt.Println(duration.String())
+
+	fmt.Println(duration.Seconds())
+
+	fmt.Println(math.Round(duration.Minutes()*1000) / 1000)
+
+	// 小数处理
+	fmt.Println(math.Round(3.1415*1000) / 1000)
+
+}
+
+func TestTime1(tt *testing.T) {
+	t := time.Now()
+	fmt.Println("日期", t.Format("2006-01-02 15:04:05"))
+	fmt.Println("时间戳：", t.Unix())
+
+	y := t.Year()                 //年
+	m := (int)(t.Month())         //月,转为整型
+	d := t.Day()                  //日
+	h := t.Hour()                 //小时
+	i := t.Minute()               //分钟
+	s := t.Second()               //秒
+	fmt.Println(y, m, d, h, i, s) //2018 July 11 15 24 59
 }

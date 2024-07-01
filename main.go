@@ -2,18 +2,33 @@ package main
 
 import (
 	"fmt"
-	"goTest/domain/cmd"
-	"goTest/domain/system"
 	"gopkg.in/yaml.v2"
+	"os"
 	"time"
 )
 
 func main() {
 
-	system.GetRootDir()
-	_ = cmd.Execute()
+	//system.GetRootDir()
+	//_ = cmd.Execute()
 
 	//test.TestImplode()
+
+	ch := make(chan int, 1)
+	go func() {
+		for {
+			select {
+			case ret := <-ch:
+				fmt.Println("接收成功", ret)
+			}
+		}
+	}()
+	// 如果没有消费，将会一直阻塞
+	for i := 0; i < 10; i++ {
+		ch <- i
+	}
+	fmt.Println(os.Getpid())
+	time.Sleep(3600 * time.Second)
 }
 
 func init() {

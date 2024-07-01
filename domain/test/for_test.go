@@ -32,3 +32,13 @@ func TestForSelect(t *testing.T) {
 	<-make(chan struct{})
 
 }
+
+func TestForSelect2(t *testing.T) {
+	s := []int{1, 2, 3, 4, 5}
+	// for range 是go的语法糖，再循环前先计算s的长度再来计算
+	for _, v := range s {
+		s = append(s, v)
+		fmt.Printf("len(s)=%v\n", len(s))
+	}
+	fmt.Println(s)
+}

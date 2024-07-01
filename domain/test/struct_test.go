@@ -6,8 +6,10 @@ import (
 )
 
 type Person struct {
-	Name string
-	Age  int
+	Name  string
+	Age   int
+	Phone string
+	Fn    func(phone string)
 }
 
 type Student struct {
@@ -22,8 +24,8 @@ type Address struct {
 }
 
 func NewStudent() *Student {
-	s := Student{}
-	return &s
+	s := &Student{}
+	return s
 }
 
 func (s *Student) SetName(name string) {
@@ -34,12 +36,23 @@ func (s *Student) SetAddress(address Address) {
 	s.Address = address
 }
 
+func (s *Student) SetAge(age int) {
+	s.Age = age
+}
+
 func TestStruct1(t *testing.T) {
 	s := NewStudent()
 	address := Address{City: "深圳", Country: "中国"}
 	s.SetAddress(address)
 	s.SetName("bingcool")
+	s.SetAge(18)
+	s.Fn = func(phone string) {
+		s.Phone = phone
+	}
+	s.Fn("123456")
 	fmt.Println(s.Address.City) // 输出 Tom 18 High School
+	fmt.Println(s.Age)
+	fmt.Println(s.Phone)
 }
 
 func TestStruct2(t *testing.T) {
@@ -51,4 +64,8 @@ func TestStruct2(t *testing.T) {
 	s.SetAddress(address)
 	s.SetName("bingcool")
 	fmt.Println(s.Address.City) // 输出 Tom 18 High School
+}
+
+func TestStruct3(t *testing.T) {
+
 }
