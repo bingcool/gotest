@@ -12,7 +12,7 @@ import (
 	"os/exec"
 )
 
-// go run main.go daemon-start consume-user-order --name=bingcool
+// go run main.go daemon-start consume-user-orderDto --name=bingcool
 
 var daemonStartCommandName = "daemon-start"
 

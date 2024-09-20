@@ -1,8 +1,10 @@
 package controller
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"goTest/domain/Go"
+	"goTest/domain/dto/orderDto"
 	LibraryOrder "goTest/domain/library/order"
 )
 
@@ -20,20 +22,6 @@ func NewOrder(c *gin.Context) *OrderController {
 	return order
 }
 
-// ListOrderReqDto 请求结构体
-type ListOrderReqDto struct {
-	OrderId  int `json:"order_id" form:"order_id" binding:"required,gt=0"`
-	OrderId1 int `json:"order_id1" form:"order_id1"`
-}
-
-// ListOrderDto 响应结构体
-type ListOrderDto struct {
-	OrderId  int            `json:"order_id"`
-	UserId   int            `json:"user_id"`
-	JsonData string         `json:"json_data"`
-	Address  map[string]any `json:"address"`
-}
-
 // ListOrder 订单列表
 // @Summary Get All Order list
 // @Schemes
@@ -45,18 +33,17 @@ type ListOrderDto struct {
 // @Success 200 {string} string "ok"
 // @Failure 400 {string} string "bad request"
 // @Failure 500 {string} string "Internal Server Error"
-// @Router /api/v1/order/list [get]
-func (Order *OrderController) ListOrder(ctc *gin.Context) {
-	listOrderReqDto := ListOrderReqDto{}
-	Order.bindToReqDtoStruct(&listOrderReqDto)
+// @Router /api/v1/orderDto/list [get]
+func (Order *OrderController) ListOrder(ctc *gin.Context, listOrderReqDto *orderDto.ListOrderReqDto) {
+	fmt.Println(listOrderReqDto.OrderId)
 
 	orderService := LibraryOrder.NewOrderService()
 	result := orderService.GetOrderList(0)
-	var list []ListOrderDto
+	var list []orderDto.ListOrderDto
 	// list := make([]ListOrderDto, 0)
 	i := 0
 	for _, item := range result {
-		listOrderDto := ListOrderDto{}
+		listOrderDto := orderDto.ListOrderDto{}
 		listOrderDto.OrderId = item.OrderId
 		listOrderDto.UserId = item.UserId
 		listOrderDto.JsonData = item.JsonData

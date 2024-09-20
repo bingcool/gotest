@@ -3,6 +3,7 @@ package route
 import (
 	"github.com/gin-gonic/gin"
 	"goTest/domain/controller"
+	"goTest/domain/dto/orderDto"
 	"goTest/domain/middlewares"
 )
 
@@ -22,15 +23,19 @@ func SetOrderRouter(router *gin.Engine) {
 
 		// 路由处理
 		v1.Any("/order/list", func(context *gin.Context) {
-			(controller.NewOrder(context)).ListOrder(context)
+			listOrderReqDto := &orderDto.ListOrderReqDto{}
+			_ = context.ShouldBind(listOrderReqDto)
+			(controller.NewOrder(context)).ListOrder(context, listOrderReqDto)
 		})
 
 		// 路由处理-最前面的可以是api的中间件
 		v1.Any("/order/list1", middlewares.ValidateLogin(), func(context *gin.Context) {
-			(controller.NewOrder(context)).ListOrder(context)
+			listOrderReqDto := &orderDto.ListOrderReqDto{}
+			_ = context.ShouldBind(listOrderReqDto)
+			(controller.NewOrder(context)).ListOrder(context, listOrderReqDto)
 		})
 
-		// 路由处理
+		// 路由处理sa
 		v1.GET("/order/save", func(context *gin.Context) {
 			(controller.NewOrder(context)).SaveOrder(context)
 		})

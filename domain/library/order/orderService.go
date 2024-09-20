@@ -45,24 +45,24 @@ func (OrderService *OrderService) GetOrderList(orderId int) []model.Order {
 	//
 	//fmt.Println(orders1)
 
-	//rows, _ := db.Table(order.TableName()).Where("user_id = ?", 101).Select("order_id", "user_id", "json_data").Rows()
+	//rows, _ := db.Table(orderDto.TableName()).Where("user_id = ?", 101).Select("order_id", "user_id", "json_data").Rows()
 	//defer func(rows *sql.Rows) {
 	//	_ = rows.Close()
 	//}(rows)
 	//
 	//for rows.Next() {
-	//	orderNew := order
+	//	orderNew := orderDto
 	//	rows.Scan(&orderNew.OrderId, &orderNew.UserId, &orderNew.JsonData)
 	//	fmt.Println(orderNew)
 	//}
 	//
 	//// 创建变量用于存储结果
 	//var count int64
-	//_ = db.Table(order.TableName()).Where("user_id = ?", 101).Count(&count)
+	//_ = db.Table(orderDto.TableName()).Where("user_id = ?", 101).Count(&count)
 	//
 	//fmt.Println(count)
 	//
-	//_ = db.Table(order.TableName()).Where("user_id = ?", 101).Select("order_id", "user_id", "json_data").Scan(&orders1)
+	//_ = db.Table(orderDto.TableName()).Where("user_id = ?", 101).Select("order_id", "user_id", "json_data").Scan(&orders1)
 
 	fmt.Println(orders1)
 

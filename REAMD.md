@@ -85,3 +85,11 @@ https://github.com/sourcegraph/conc ： 短小精悍的go协程库
 github.com/go-resty/resty： curl的包，类似php的guzzle-client包，封装了http请求，支持json、xml、form、multipart、文件上传、文件下载、重试、超时、代理、认证、压缩、日志、监控等
 
 github.com/gofrs/uuid： Go语言库，用于生成UUID
+
+github.com/Shopify/sarama：Sarama 是一个纯 Go 编写的 Kafka 客户端库，支持 Apache Kafka 0.8 及以上版本。它提供了一个高级 API 用于简化消息的生产和消费，同时也提供了一个低级 API，用于更细粒度的控制。 支持多种Kafka版本，良好的文档和社区支持
+
+github.com/confluentinc/confluent-kafka-go：Confluent 的 Kafka Go 客户端，它是对 C 库的封装，提供了与 Confluent Platform 版本的 Kafka 完全兼容的功能。与 Confluent Platform 的高度集成，支持 SASL/SSL 认证，可能在性能上有优势
+
+github.com/segmentio/kafka-go：Segment 提供的 Kafka Go 客户端，设计简洁，易于使用，专注于性能和灵活性。简洁的 API，高性能，支持多种 Kafka 功能
+
+

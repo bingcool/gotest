@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"sync"
 	"testing"
 )
@@ -8,11 +9,11 @@ import (
 func TestOnce(t *testing.T) {
 	once := sync.Once{}
 	once.Do(func() {
-		t.Log("once1")
+		fmt.Println("once1")
 		return
 	})
 
 	once.Do(func() {
-		t.Log("once2")
+		fmt.Println("once2")
 	})
 }

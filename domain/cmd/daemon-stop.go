@@ -10,7 +10,7 @@ import (
 	"syscall"
 )
 
-// go run main.go daemon-stop consume-user-order
+// go run main.go daemon-stop consume-user-orderDto
 
 var daemonStopCommandName = "daemon-stop"
 

@@ -24,42 +24,9 @@ func TestForLoop(t *testing.T) {
 }
 
 func TestError(t *testing.T) {
-	errors.New("test error")
+	e := errors.New("test error print")
+	fmt.Println(e.Error())
 	fmt.Println(fmt.Errorf("error test"))
-}
-
-// TestSyncMap 测试
-func TestSyncMap(t *testing.T) {
-	var m sync.Map
-	// 1. 写入
-	m.Store("age1", 18)
-	m.Store("age2", 20)
-
-	// 2. 读取
-	age, _ := m.Load("age1")
-
-	//str := age + "年龄"
-	//fmt.Println(str)
-	//myage, ok1 := age.(string)
-
-	// 3. 遍历
-	m.Range(func(key, value interface{}) bool {
-		name := key.(string)
-		age := value.(int)
-		fmt.Println(name, age)
-		return true
-	})
-
-	// 4. 删除
-	m.Delete("age1")
-	age, ok := m.Load("age1")
-	fmt.Println(age, ok)
-
-	// 5. 读取或写入
-	m.LoadOrStore("age2", 100)
-	age, _ = m.Load("age2")
-	fmt.Println(age)
-
 }
 
 // TestGopsutil 内存使用统计

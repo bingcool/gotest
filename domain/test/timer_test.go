@@ -20,11 +20,11 @@ func TestTick(t *testing.T) {
 	// 循环中等待时间是否已达到
 	go func(t *time.Ticker) {
 		for {
-			// 在改协程中阻塞等待，不影响其他协程的执行
+			// 在该协程中阻塞等待，5s时间到了，就会触发一个chan返回，不影响其他协程的执行
 			_ = <-t.C
 
 			nowTime1 := time.Now().Unix()
-			// 满足条件，认为控制stop定时器
+			// 满足条件，人为控制stop定时器
 			if nowTime1 > nowTime {
 				t.Stop()
 			} else {
