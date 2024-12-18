@@ -23,22 +23,12 @@ func NewOrder(c *gin.Context) *OrderController {
 }
 
 // ListOrder 订单列表
-// @Summary Get All Order list
-// @Schemes
-// @Description do ping
-// @Tags example
-// @Accept json
-// @Produce json
-// @Param creator query int true "创建者"
-// @Success 200 {string} string "ok"
-// @Failure 400 {string} string "bad request"
-// @Failure 500 {string} string "Internal Server Error"
-// @Router /api/v1/orderDto/list [get]
-func (Order *OrderController) ListOrder(ctc *gin.Context, listOrderReqDto *orderDto.ListOrderReqDto) {
+
+func (Order *OrderController) ListOrder(ctx *gin.Context, listOrderReqDto *orderDto.ListOrderReqDto) {
 	fmt.Println(listOrderReqDto.OrderId)
 
 	orderService := LibraryOrder.NewOrderService()
-	result := orderService.GetOrderList(0)
+	result := orderService.GetOrderList(1691463954)
 	var list []orderDto.ListOrderDto
 	// list := make([]ListOrderDto, 0)
 	i := 0

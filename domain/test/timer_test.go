@@ -2,6 +2,7 @@ package test
 
 import (
 	"fmt"
+	"github.com/gogf/gf/v2/os/gtime"
 	"goTest/domain/system"
 	"math"
 	"runtime"
@@ -141,4 +142,25 @@ func TestTime1(tt *testing.T) {
 	i := t.Minute()               //分钟
 	s := t.Second()               //秒
 	fmt.Println(y, m, d, h, i, s) //2018 July 11 15 24 59
+}
+
+func TestTime2(tt *testing.T) {
+	datetime := gtime.Date()
+	fmt.Println(datetime)
+
+	toTime, err := gtime.StrToTime("2023-07-05 15:04:05")
+	if err != nil {
+		return
+	}
+
+	fmt.Println(toTime.Timestamp())
+
+	toTime = gtime.New()
+	a1 := gtime.New(toTime.Timestamp()).Layout("2006-01-02 15:04:05")
+
+	fmt.Println(a1)
+
+	a2 := toTime.Weekday()
+
+	fmt.Println(a2)
 }

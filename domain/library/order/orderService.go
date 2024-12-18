@@ -17,7 +17,7 @@ func NewOrderService() *OrderService {
 }
 
 // GetOrderList 获取订单列表
-func (OrderService *OrderService) GetOrderList(orderId int) []model.Order {
+func (orderService *OrderService) GetOrderList(orderId int) []model.Order {
 
 	var orders []model.Order
 	var orders1 []model.Order
@@ -25,17 +25,17 @@ func (OrderService *OrderService) GetOrderList(orderId int) []model.Order {
 
 	if orderId > 0 {
 		db = db.Where("order_id = ?", orderId)
+	} else {
+		db = db.Where("user_id in ?", []int{101})
 	}
-
-	db = db.Where("user_id in ?", []int{101})
 
 	db.Limit(10).Find(&orders)
 
 	order := model.Order{}
 	// var orders2 []model.Order
 	// 原生sql打印出来
-	sql1 := OrderService.ToSQL(func(db *gorm.DB) *gorm.DB {
-		db = db.Table(order.TableName()).Where("user_id = ?", 102).Select("order_id", "user_id", "json_data").Find(orders1)
+	sql1 := orderService.ToSQL(func(db *gorm.DB) *gorm.DB {
+		db = db.Table(order.TableName()).Where("order_id = ?", orderId).Select("order_id", "user_id", "json_data").Find(orders1)
 		return db
 	})
 
@@ -70,7 +70,7 @@ func (OrderService *OrderService) GetOrderList(orderId int) []model.Order {
 }
 
 // SaveOrder 保存订单信息
-func (OrderService *OrderService) SaveOrder() int {
+func (orderService *OrderService) SaveOrder() int {
 	currentTime := time.Now()
 	seconds := currentTime.Unix()
 	order := model.NewOrderModel()
@@ -93,7 +93,7 @@ func (OrderService *OrderService) SaveOrder() int {
 //				.Order("name ASC")
 //				.First(&User{})
 //	})
-func (OrderService *OrderService) ToSQL(queryFn func(tx *gorm.DB) *gorm.DB) string {
+func (orderService *OrderService) ToSQL(queryFn func(tx *gorm.DB) *gorm.DB) string {
 	tx := queryFn(factory.GetDb().Session(&gorm.Session{DryRun: true, SkipDefaultTransaction: true, NewDB: true}))
 	stmt := tx.Statement
 

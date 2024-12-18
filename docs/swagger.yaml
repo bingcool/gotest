@@ -1,0 +1,33 @@
+info:
+  contact: {}
+paths:
+  /api/v1/order/list:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      parameters:
+      - description: 创建者
+        in: query
+        name: creator
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Get All Order list
+      tags:
+      - example
+swagger: "2.0"

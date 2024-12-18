@@ -29,7 +29,9 @@ github.com/urfave/cli: 用于在Go中构建命令行工具
 
 go-playground/validator: 参数验证
 
-https://github.com/gookit/validate：参数验证   
+github.com/gogf/gf/v2: 高性能的Go语言框架，用于快速开发Web服务,里面很多工具包可以使用，gjson.gconv,gutil,gfile等
+
+github.com/gookit/validate：参数验证   
 
 github.com/go-redis/redis/v8： redis操作库
 
@@ -78,7 +80,9 @@ golang.org/x/tools/cmd/goimports : 自动导入包规范包的位置
 
 https://github.com/bytedance/sonic?tab=readme-ov-file ： 字节开源的json库
 
-https://github.com/hashicorp/golang-lru ： LRU 缓存库·
+https://github.com/goccy/go-json :  Go 语言库，用于解析和序列化 JSON 数据,性能高
+
+https://github.com/hashicorp/golang-lru ： LRU 缓存库
 
 https://github.com/sourcegraph/conc ： 短小精悍的go协程库
 
@@ -91,5 +95,11 @@ github.com/Shopify/sarama：Sarama 是一个纯 Go 编写的 Kafka 客户端库�
 github.com/confluentinc/confluent-kafka-go：Confluent 的 Kafka Go 客户端，它是对 C 库的封装，提供了与 Confluent Platform 版本的 Kafka 完全兼容的功能。与 Confluent Platform 的高度集成，支持 SASL/SSL 认证，可能在性能上有优势
 
 github.com/segmentio/kafka-go：Segment 提供的 Kafka Go 客户端，设计简洁，易于使用，专注于性能和灵活性。简洁的 API，高性能，支持多种 Kafka 功能
+
+github.com/fatih/color 是用于输出对应编码颜色的包。
+github.com/schollz/progressbar 是用于为执行时间过久的任务创建进度条的包。
+github.com/jimlawless/whereami 是用于捕获源代码的文件名、行号、函数等信息的包，这对于改正错误信息十分有用！
+github.com/spf13/cobra 是用于更轻松地创建带有输入选项和相关文档的复杂脚本的包。
+
 
 

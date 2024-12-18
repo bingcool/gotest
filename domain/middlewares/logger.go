@@ -17,7 +17,10 @@ func SetLoggerWithWriter(router *gin.Engine) {
 	}
 
 	defer func(logFile *os.File) {
-
+		err := logFile.Close()
+		if err != nil {
+			return
+		}
 	}(logFile)
 
 	//fmt.Println(GetCurrentGoroutineID())

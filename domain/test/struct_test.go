@@ -6,9 +6,9 @@ import (
 )
 
 type Person struct {
-	Name  string
-	Age   int
-	Phone string
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	Phone string `json:"phone"`
 	Fn    func(phone string)
 }
 
@@ -16,6 +16,12 @@ type Student struct {
 	Person  // 组合了Person结构体
 	School  string
 	Address Address
+}
+
+type Teacher struct {
+	Name  string `json:"name"`
+	Age   int    `json:"age"`
+	Phone string `json:"phone"`
 }
 
 type Address struct {
