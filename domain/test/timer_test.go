@@ -13,6 +13,10 @@ import (
 func TestTick(t *testing.T) {
 	// 获取时间戳
 	nowTime := time.Now().Unix() + 11
+	start_time := "2025-01-01"
+	startDate, _ := time.Parse("2006-01-02", start_time)
+
+	fmt.Println(startDate.Format("2006-01"))
 
 	ticker1 := time.NewTicker(5 * time.Second)
 	// 一定要调用Stop()，回收资源
@@ -163,4 +167,12 @@ func TestTime2(tt *testing.T) {
 	a2 := toTime.Weekday()
 
 	fmt.Println(a2)
+}
+
+func TestTime3(tt *testing.T) {
+	str := time.Now().Format("2006-01-02 15:04:05")
+	fmt.Println(str)
+	local, _ := time.LoadLocation("Asia/Shanghai")
+	timeT, _ := time.ParseInLocation("2006-01-02 15:04:05", str, local)
+	fmt.Println(timeT)
 }

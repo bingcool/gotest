@@ -16,7 +16,7 @@ clean:
 	go clean -i .
 
 model:
-	/root/go/bin/gentool -dsn "root:root@galaxy1024@tcp(192.168.23.53:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local" -outPath=./domain/query
+	./gentool -c ./gen.yml
 
 help:
 	@echo "make: compile packages and dependencies"

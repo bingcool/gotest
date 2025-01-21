@@ -61,10 +61,13 @@ func capitalize(s string) string {
 }
 
 func TestGen2(t *testing.T) {
-	g := gen.NewGenerator(gen.Config{
+	cfg := gen.Config{
 		OutPath: "../query",
-		Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode
-	})
+		Mode:    gen.WithoutContext | gen.WithQueryInterface, // generate mode
+	}
+
+	g := gen.NewGenerator(cfg)
+	g.WithImportPkgPath("goTest/domain/gmodel")
 
 	gormdb := factory.GetDb()
 	// gormdb, _ := gorm.Open(mysql.Open("root:@(127.0.0.1:3306)/demo?charset=utf8mb4&parseTime=True&loc=Local"))
@@ -84,5 +87,7 @@ func TestGen2(t *testing.T) {
 }
 
 func TestGen3(t *testing.T) {
-	//query.Tbl.Table("tbl_users")
+	go func() {
+
+	}()
 }

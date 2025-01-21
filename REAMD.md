@@ -15,17 +15,26 @@ flag: cli参数输入,输出处理
 第三方常用的包：
 https://github.com/shockerli/go-awesome?tab=readme-ov-file 
 
+gorm.io/gorm : go的ORM数据库包
+github.com/bingcool/gen : 基于gorm自动生成model和query代码  
+
 github.com/robfig/cron/v3: 封裝的cron的计划任务定时器的处理
 
 github.com/spf13/cobra：构建console的应用，定义各种命令   
 
 github.com/spf13/viper: 使用 Viper 来管理配置
 
+github.com/spf13/cast: 类型转化工具库cast详解
+
 github.com/cheggaaa/pb: 终端进度条管理-Terminal progress bar for Go
 
 github.com/swaggo/gin-swagger: 自动生成接口文档
 
 github.com/urfave/cli: 用于在Go中构建命令行工具
+
+github.com/duke-git/lancet/v2  （推荐）一个全面、高效、可复用的go语言工具函数库  
+
+github.com/mitchellh/mapstructure 提供了更灵活的方式来将 map 转换为结构体，而无需经过 JSON 序列化/反序列化的中间步骤 
 
 go-playground/validator: 参数验证
 

@@ -21,7 +21,7 @@ func GetDb() *gorm.DB {
 		dsn := "root:123456@tcp(127.0.0.1:3307)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
 		return initDb(dsn)
 	case "linux":
-		dsn := "root:root@galaxy1024@tcp(192.168.23.53:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
+		dsn := "root:root@galaxy1024@tcp(192.168.35.59:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
 		return initDb(dsn)
 	default:
 		dsn := "root:root@galaxy1024@tcp(localhost:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
