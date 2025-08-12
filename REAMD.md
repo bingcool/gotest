@@ -79,6 +79,8 @@ https://github.com/mattn ： 大牛项目仓库
 
 https://github.com/qmuntal/stateless go的状态机的包
 
+https://github.com/looplab/fsm go的有限状态机
+
 https://github.com/mattn/go-sqlite3     
 
 https://github.com/shockerli/go-awesome
