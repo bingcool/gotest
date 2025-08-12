@@ -1,11 +1,11 @@
 version: "0.1"
 database:
   # consult[https://gorm.io/docs/connecting_to_the_database.html]"
-  dsn : "root:root@galaxy1024@tcp(192.168.23.53:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
+  dsn : "root:root@galaxy1024@tcp(192.168.25.13:3306)/bingcool?charset=utf8mb4&parseTime=True&loc=Local"
   # input mysql or postgres or sqlite or sqlserver. consult[https://gorm.io/docs/connecting_to_the_database.html]
   db  : "mysql"
   # enter the required data table or leave it blank.You can input : 
-  # tables  : 
+  # tables  : -
   #   - orders
   #   - users
   #   - goods

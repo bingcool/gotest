@@ -77,6 +77,8 @@ https://github.com/rabbitmq/amqp091-go 这是一个Go语言库，用于与Rabbit
 
 https://github.com/mattn ： 大牛项目仓库
 
+https://github.com/qmuntal/stateless go的状态机的包
+
 https://github.com/mattn/go-sqlite3     
 
 https://github.com/shockerli/go-awesome

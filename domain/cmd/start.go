@@ -2,11 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/robfig/cron/v3"
-	"github.com/spf13/cobra"
-	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 	_ "goTest/docs"
 	"goTest/domain/console"
 	"goTest/domain/middlewares"
@@ -15,6 +10,12 @@ import (
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/gin-gonic/gin"
+	"github.com/robfig/cron/v3"
+	"github.com/spf13/cobra"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // go run main.go start --myname=bingcool

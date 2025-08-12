@@ -2,12 +2,13 @@ package test
 
 import (
 	"fmt"
-	"github.com/gogf/gf/v2/os/gtime"
 	"goTest/domain/system"
 	"math"
 	"runtime"
 	"testing"
 	"time"
+
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 func TestTick(t *testing.T) {
@@ -175,4 +176,10 @@ func TestTime3(tt *testing.T) {
 	local, _ := time.LoadLocation("Asia/Shanghai")
 	timeT, _ := time.ParseInLocation("2006-01-02 15:04:05", str, local)
 	fmt.Println(timeT)
+}
+func TestTime4(tt *testing.T) {
+	startTime, _ := time.Parse("2006-01-02", time.Now().Format("2006-01-02"))
+	endTime, _ := time.Parse("2006-01-02 15:04:05", time.Now().Format("2006-01-02 15:04:05"))
+	fmt.Println(endTime.Format("2006-01-02 15:04:05"))
+	fmt.Println(startTime.Format("2006-01-02 15:04:05"))
 }

@@ -2,13 +2,16 @@ package test
 
 import (
 	"fmt"
-	"github.com/juju/errors"
-	"github.com/shirou/gopsutil/v3/mem"
+	"math"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/juju/errors"
+	"github.com/shirou/gopsutil/v3/mem"
 )
 
 // TestFor 测试for循环体的变量
@@ -134,4 +137,39 @@ func TestImplode(t *testing.T) {
 	for _, v := range items {
 		fmt.Println(v)
 	}
+}
+
+func TestFloatStr(t *testing.T) {
+	HkDollar1, err := strconv.ParseFloat("", 64)
+	fmt.Println(err)
+	if err != nil {
+		HkDollar1 = float64(0)
+	}
+
+	HkDollar2 := strconv.FormatFloat(HkDollar1, 'f', 2, 64)
+
+	if strings.Contains(HkDollar2, ".00") {
+		HkDollar2 = strings.Replace(HkDollar2, ".00", "", -1)
+	}
+
+	fmt.Println(HkDollar2)
+}
+
+func TestFloatTwo(t *testing.T) {
+	a := 1.0
+	b := 8.0
+
+	if b == 0 {
+		fmt.Println("错误：除数不能为零")
+		return
+	}
+
+	result := a / b
+	fmt.Println(math.Round(result*100) / 100 * 40)
+	fmt.Printf("结果：%.2f\n", result) // 输出：结果：3.50
+}
+
+func TestFloatThree(t *testing.T) {
+	s := make([]int, 0) // 创建一个长度为 5 的 int 切片
+	fmt.Println(s)
 }

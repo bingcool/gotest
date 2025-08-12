@@ -1,10 +1,11 @@
 package route
 
 import (
-	"github.com/gin-gonic/gin"
 	"goTest/domain/controller"
 	"goTest/domain/dto/orderDto"
 	"goTest/domain/middlewares"
+
+	"github.com/gin-gonic/gin"
 )
 
 func SetOrderRouter(router *gin.Engine) {
